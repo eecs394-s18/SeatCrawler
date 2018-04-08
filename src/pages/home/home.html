@@ -1,27 +1,25 @@
-<ion-header>
-  <ion-navbar>
-    <ion-title>Home</ion-title>
-  </ion-navbar>
-</ion-header>
+import { Component } from '@angular/core';
+import { NavController } from 'ionic-angular';
 
-<ion-content padding>
-  <h2>Welcome to Ionic!</h2>
-  <p>
-    This starter project comes with simple tabs-based layout for apps
-    that are going to primarily use a Tabbed UI.
-  </p>
-  <p>
-    Take a look at the <code>src/pages/</code> directory to add or change tabs,
-    update any existing page or create new pages.
-  </p>
+@Component({
+  selector: 'page-home',
+  templateUrl: 'home.html'
+})
+export class HomePage {
 
+  constructor(public navCtrl: NavController) {
 
-<!-- <ul class = "cafe_list">
-  <li @ngFor = "let cafe of cafes"
-[class.selected]="cafe === selectedCafe"
-(click)= "onSelect(cafe)">
-<span class="badge">{{cafe.name}}</span>
-  </li>
-</ul> -->
+  }
+  items = [
+    'Kafein',
+    'Peet\'s Coffee',
+    'Unicorn',
+    'Coffee Lab',
+    'Cupitol',
+    'Sherbucks',
+    'Norbucks',
+    'Cafe Bergson',
+    'Einstein\s Bagels'
+  ];
 
-</ion-content>
+}
