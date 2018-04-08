@@ -8,6 +8,7 @@
   <ion-list>
     <button ion-item *ngFor="let item of items" (click)="itemSelected(item)">
       {{ item }}
+      <ion-icon style="right: 15px; position: absolute; color: green;" name='radio-button-on' ></ion-icon> 
     </button>
   </ion-list>
 </ion-content>
