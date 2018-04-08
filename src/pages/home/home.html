@@ -1,25 +1,13 @@
-import { Component } from '@angular/core';
-import { NavController } from 'ionic-angular';
+<ion-header>
+  <ion-navbar>
+    <ion-title>Lists</ion-title>
+  </ion-navbar>
+</ion-header>
 
-@Component({
-  selector: 'page-home',
-  templateUrl: 'home.html'
-})
-export class HomePage {
-
-  constructor(public navCtrl: NavController) {
-
-  }
-  items = [
-    'Kafein',
-    'Peet\'s Coffee',
-    'Unicorn',
-    'Coffee Lab',
-    'Cupitol',
-    'Sherbucks',
-    'Norbucks',
-    'Cafe Bergson',
-    'Einstein\s Bagels'
-  ];
-
-}
+<ion-content>
+  <ion-list>
+    <button ion-item *ngFor="let item of items" (click)="itemSelected(item)">
+      {{ item }}
+    </button>
+  </ion-list>
+</ion-content>
