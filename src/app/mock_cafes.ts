@@ -1,5 +1,4 @@
-
-import { cafe } from './cafe';
+import { Cafe } from './cafe';
 
 export const Cafes: Cafe[] = [
   { name: "Kafein", status: "green" },

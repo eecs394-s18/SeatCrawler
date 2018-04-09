@@ -7,8 +7,15 @@
 <ion-content>
   <ion-list>
     <button ion-item *ngFor="let item of items" (click)="itemSelected(item)">
-      {{ item }}
-      <ion-icon style="right: 15px; position: absolute; color: green;" name='radio-button-on' ></ion-icon> 
+      {{ item.name}}
+      <ion-icon [ngStyle]="{'color': item.status, 'position': 'absolute', 'right': '15px' }"  name="radio-button-on"  ></ion-icon>
+      <p [ngStyle]="{'float':'right'}">{{item.distance}} miles</p>
     </button>
   </ion-list>
 </ion-content>
+
+
+
+
+
+<!--<ion-icon [ngStyle.position] ="{'right': 15px, 'position': absolute, 'color': {{item.status}}, 'name' ='radio-button-on' }" ></ion-icon>-->
