@@ -12,7 +12,7 @@ export class HomePage {
   }
   items = [
       {name: 'Kafein',
-       distance: '0.5',
+       distance: '0.1',
        status: 'red',
        shape: 'radio-button-on',},
       {name: 'Peet\'s Coffee',
