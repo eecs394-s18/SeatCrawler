@@ -1,13 +1,15 @@
 import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
+import { DetailsPage} from "../details/details";
+import {cafelist} from "../../app/mock_cafes";
 
 @Component({
-  selector: 'page-home',
-  templateUrl: 'home.html'
+    selector: 'page-home',
+    templateUrl: 'home.html'
 })
 export class HomePage {
 
-  constructor(public navCtrl: NavController) {
+    constructor(public navCtrl: NavController) {
 
   }
   items = [
@@ -45,4 +47,8 @@ export class HomePage {
         shape: 'radio-button-on'},
   ];
 
+
+    pagedetails = DetailsPage;
+
+    items = cafelist;
 }
