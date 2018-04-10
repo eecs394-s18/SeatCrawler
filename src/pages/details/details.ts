@@ -24,10 +24,17 @@ export class DetailsPage implements OnInit{
     this.item = this.navParams.data
   }
 
+  clickedEmpty() {
+    this.item.status = 'green';
+  }
 
-  // ionViewDidLoad() {
-  //   console.log('ionViewDidLoad DetailsPage');
-  // }
+  clickedFilling() {
+    this.item.status = 'yellow';
+  }
+
+  clickedFull() {
+    this.item.status = 'red';
+  }
 
 
 }

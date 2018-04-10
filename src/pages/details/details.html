@@ -21,9 +21,9 @@
     </ion-list>
 
     <p padding>
-        <button ion-button color="secondary" block>Empty</button>
-        <button ion-button color="orange" block>Filling</button>
-        <button ion-button color="danger" block>Full</button>
+        <button (click)="clickedEmpty()" ion-button color="secondary" block>Empty</button>
+        <button (click)="clickedFilling()" ion-button color="orange" block>Filling</button>
+        <button (click)="clickedFull()" ion-button color="danger" block>Full</button>
     </p>
       <ion-list detail-none>
           <button ion-item>
