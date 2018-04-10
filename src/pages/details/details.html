@@ -9,7 +9,9 @@
   <ion-card class="cards-list-demo">
     <ion-card-header>
       {{item.name}}
+      <ion-icon [ngStyle]="{'color': item.status, 'position': 'absolute', 'right': '25px' }"  name="radio-button-on"></ion-icon>
     </ion-card-header>
+
 
     <ion-list detail-none>
       <button ion-item>
