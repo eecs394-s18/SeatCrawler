@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { Cafe } from '../../app/cafe';
+import { CAFES } from '../../app/mock-cafes'
 
 /**
  * Generated class for the CafeComponent component.
@@ -10,9 +12,11 @@ import { Component } from '@angular/core';
   selector: 'cafe',
   templateUrl: 'cafe.html'
 })
-export class CafeComponent {
+export class CafeComponent implements OnInit{
 
-  text: string;
+  cafes = CAFES;
+
+  selectedCafe: Cafe;
 
   constructor() {
     console.log('Hello CafeComponent Component');
