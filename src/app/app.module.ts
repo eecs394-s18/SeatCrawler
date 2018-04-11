@@ -40,8 +40,8 @@ const firebaseConfig = {
   imports: [
     BrowserModule,
     IonicModule.forRoot(MyApp),
-      AngularFireDatabaseModule,
-      AngularFireModule.initializeApp(firebaseConfig),
+    AngularFireDatabaseModule,
+    AngularFireModule.initializeApp(firebaseConfig),
   ],
   bootstrap: [IonicApp],
   entryComponents: [

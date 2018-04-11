@@ -1,8 +1,9 @@
 import { NgModule } from '@angular/core';
-import { CafeComponent } from './cafe/cafe';
+// import { CafeComponent } from './cafe/cafe';
+
 @NgModule({
-	declarations: [CafeComponent],
+	declarations: [],
 	imports: [],
-	exports: [CafeComponent]
+	exports: []
 })
 export class ComponentsModule {}
