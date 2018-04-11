@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
 import { DetailsPage} from "../details/details";
-import { AngularFireDatabase, FirebaseListObservable, } from 'angularfire2/database';
+import { AngularFireDatabase, AngularFireList} from 'angularfire2/database';
+import { Observable } from 'rxjs/Observable';
 
 @Component({
     selector: 'page-home',
@@ -10,9 +11,9 @@ import { AngularFireDatabase, FirebaseListObservable, } from 'angularfire2/datab
 export class HomePage {
 
 
-    cafe_list: FirebaseListObservable<any[]>;
+    cafe_list: Observable<any[]>;
     constructor(public navCtrl: NavController, public adb:  AngularFireDatabase) {
-    this.cafe_list = this.adb.list('/cafe_list/');
+    this.cafe_list = this.adb.list('/cafe_list/').valueChanges();
 
     }
 

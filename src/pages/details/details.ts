@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NavController, NavParams} from 'ionic-angular';
 import {Cafe} from "../../app/cafe";
-import {AngularFireDatabase, FirebaseObjectObservable} from 'angularfire2/database';
+import {AngularFireDatabase, AngularFireObject} from 'angularfire2/database';
 
 /**
  * Generated class for the DetailsPage page.
@@ -19,14 +19,11 @@ export class DetailsPage {
 
     item: Cafe;
     name: string;
-    temp: FirebaseObjectObservable<any>;
+    temp: AngularFireObject<any>;
 
     constructor(public navCtrl: NavController, private navParams: NavParams, private  adb: AngularFireDatabase) {
         this.item = this.navParams.data;
         this.temp = adb.object('/cafe_list/' + this.item.number);
-        this.temp.subscribe(action => {
-            console.log(action)
-        });
     }
 
     updateStatus(color: any) {
