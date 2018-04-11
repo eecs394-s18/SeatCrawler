@@ -11,9 +11,8 @@ import { AngularFireDatabase, AngularFireList } from 'angularfire2/database';
 })
 export class HomePage {
   constructor(public navCtrl: NavController, afDatabase: AngularFireDatabase) {
-    this.songs = afDatabase.list('/songs').valueChanges();
-
-}
+    // this.cafes = afDatabase.list('/cafes').valueChanges();
+  }
 
   // }
   // items = [

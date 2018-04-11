@@ -1,0 +1,44 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>Details</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content class=" cards-bg">
+
+  <ion-card class="cards-list-demo">
+    <ion-card-header>
+      {{item.name}}
+      <ion-icon [ngStyle]="{'color': item.status, 'position': 'absolute', 'right': '25px' }"  name="radio-button-on"></ion-icon>
+    </ion-card-header>
+
+
+    <ion-list detail-none>
+      <button ion-item>
+        <ion-icon name='ios-globe' item-start></ion-icon>
+        Website
+      </button>
+    </ion-list>
+
+    <p padding>
+        <button (click)="clickedEmpty()" ion-button color="secondary" block>Empty</button>
+        <button (click)="clickedFilling()" ion-button color="orange" block>Filling</button>
+        <button (click)="clickedFull()" ion-button color="danger" block>Full</button>
+    </p>
+      <ion-list detail-none>
+          <button ion-item>
+              <ion-icon name='ios-link' item-start></ion-icon>
+              Info
+          </button>
+          <button ion-item detail-none>
+              <ion-icon name='ios-time' item-start></ion-icon>
+              {{item.hours}}
+          </button>
+          <button ion-item>
+              <ion-icon name='ios-pin' item-start></ion-icon>
+              Direction
+          </button>
+      </ion-list>
+  </ion-card>
+
+</ion-content>
