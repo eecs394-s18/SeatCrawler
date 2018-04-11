@@ -30,7 +30,9 @@ export class DetailsPage {
     }
 
     updateStatus(color: any) {
-    this.temp.update(color);
+      this.item.status = color.status;
+      this.temp.update(color);
+
 
     }
 }
