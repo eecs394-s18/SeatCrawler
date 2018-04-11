@@ -21,9 +21,10 @@
     </ion-list>
 
     <p padding>
-        <button (click)="clickedEmpty()" ion-button color="secondary" block>Empty</button>
-        <button (click)="clickedFilling()" ion-button color="orange" block>Filling</button>
-        <button (click)="clickedFull()" ion-button color="danger" block>Full</button>
+
+        <button ion-button (click)="updateStatus({'status': 'green'})" color="secondary" block>Empty</button>
+        <button ion-button (click)="updateStatus({'status': 'orange'})" color="orange" block>Filling</button>
+        <button ion-button (click)="updateStatus({'status': 'red'})" color="danger" block>Full</button>
     </p>
       <ion-list detail-none>
           <button ion-item>
@@ -38,7 +39,11 @@
               <ion-icon name='ios-pin' item-start></ion-icon>
               Direction
           </button>
+              {{item.number}}
       </ion-list>
+      {{temp}}
   </ion-card>
+
+
 
 </ion-content>
