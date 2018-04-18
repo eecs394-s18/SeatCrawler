@@ -29,11 +29,15 @@
       <ion-list detail-none>
           <button ion-item>
               <ion-icon name='ios-link' item-start></ion-icon>
-              Info
+              {{item.address}}
           </button>
           <button ion-item detail-none>
               <ion-icon name='ios-time' item-start></ion-icon>
-              {{item.hours}}
+              Estimate Current Popularity: {{item.currentPop}}%
+          </button>
+          <button ion-item detail-none>
+              <ion-icon name='ios-visitors' item-start></ion-icon>
+              {{item.currVistNum}}
           </button>
           <button ion-item>
               <ion-icon name='ios-pin' item-start></ion-icon>
@@ -41,7 +45,6 @@
           </button>
               {{item.number}}
       </ion-list>
-      {{temp}}
   </ion-card>
 
 
