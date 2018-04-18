@@ -33,11 +33,10 @@ export class DetailsPage {
         }
         this.temp = adb.object('/cafe_list/' + this.item.number);
     }
-    
+
 
     updateStatus(color: any) {
       this.item.status = color.status;
       this.temp.update(color);
-
     }
 }

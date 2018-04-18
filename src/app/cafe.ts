@@ -7,4 +7,5 @@ export class Cafe {
   hours: string;
   populartimes: object;
   currentPop: number;
+  currVistNum: number;
 }
