@@ -11,6 +11,7 @@ import { TabsPage } from '../pages/tabs/tabs';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { DetailsPage} from "../pages/details/details";
+import { LaunchNavigator } from '@ionic-native/launch-navigator';
 
 import { AngularFireDatabaseModule } from 'angularfire2/database';
 import { AngularFireModule } from 'angularfire2';
@@ -55,6 +56,7 @@ const firebaseConfig = {
   providers: [
     StatusBar,
     SplashScreen,
+    LaunchNavigator,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
   ]
 })

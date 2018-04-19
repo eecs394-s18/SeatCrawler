@@ -1,6 +1,7 @@
 export class Cafe {
   name: string;
   number: string;
+  address: string;
   distance: string;
   status: string;
   shape: string;
