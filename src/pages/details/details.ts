@@ -28,7 +28,7 @@ export class DetailsPage {
         var day = date.getDay();
         if(this.item.populartimes!=null){
           this.item.currentPop = this.item.populartimes[day-1]["data"][hours];
-        }else{
+        } else{
           this.item.currentPop = 0;
         }
         this.temp = adb.object('/cafe_list/' + this.item.number);
