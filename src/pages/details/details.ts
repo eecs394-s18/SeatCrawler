@@ -23,13 +23,22 @@ export class DetailsPage {
 
     constructor(public navCtrl: NavController, private navParams: NavParams, private  adb: AngularFireDatabase) {
         this.item = this.navParams.data;
+        var date = new Date();
+        var hours = date.getHours();
+        var day = date.getDay();
+        if(this.item.populartimes!=null){
+          // get the data from firebase
+          this.item.currentPop = this.item.populartimes[day-1]["data"][hours];
+        } else{
+          // if the data doesn't exist
+          this.item.currentPop = 0;
+        }
         this.temp = adb.object('/cafe_list/' + this.item.number);
     }
+
 
     updateStatus(color: any) {
       this.item.status = color.status;
       this.temp.update(color);
-
-
     }
 }

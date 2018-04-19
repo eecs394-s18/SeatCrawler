@@ -9,34 +9,36 @@
   <ion-card class="cards-list-demo">
     <ion-card-header>
       {{item.name}}
-      <ion-icon [ngStyle]="{'color': item.status, 'position': 'absolute', 'right': '25px' }"  name="radio-button-on"></ion-icon>
     </ion-card-header>
-
 
     <ion-list detail-none>
       <button ion-item>
-        <ion-icon name='ios-globe' item-start></ion-icon>
-        Website
+        <ion-icon name='ios-stats-outline' item-start></ion-icon>
+        Update current seat status
+        <ion-icon [ngStyle]="{'color': item.status, 'position': 'absolute', 'right': '25px' }"  name="radio-button-on"></ion-icon>
       </button>
     </ion-list>
-
     <p padding>
-
         <button ion-button (click)="updateStatus({'status': 'green'})" color="secondary" block>Empty</button>
         <button ion-button (click)="updateStatus({'status': 'orange'})" color="orange" block>Filling</button>
         <button ion-button (click)="updateStatus({'status': 'red'})" color="danger" block>Full</button>
     </p>
+
       <ion-list detail-none>
-          <button ion-item>
-              <ion-icon name='ios-link' item-start></ion-icon>
-              Info
+          <button ion-item text-wrap>
+              <ion-icon name='ios-link-outline' item-start></ion-icon>
+                {{item.address}}
           </button>
           <button ion-item detail-none>
-              <ion-icon name='ios-time' item-start></ion-icon>
-              {{item.hours}}
+              <ion-icon name='ios-time-outline' item-start></ion-icon>
+              Estimated Current Popularity: {{item.currentPop}}%
           </button>
           <button ion-item>
-              <ion-icon name='ios-pin' item-start></ion-icon>
+            <ion-icon name='ios-globe-outline' item-start></ion-icon>
+            Website
+          </button>
+          <button ion-item>
+              <ion-icon name='ios-pin-outline' item-start></ion-icon>
               Direction
           </button>
       </ion-list>

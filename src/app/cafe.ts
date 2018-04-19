@@ -5,4 +5,7 @@ export class Cafe {
   status: string;
   shape: string;
   hours: string;
+  populartimes: object;
+  currentPop: number;
+  currVistNum: number;
 }
