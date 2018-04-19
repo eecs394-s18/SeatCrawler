@@ -27,8 +27,10 @@ export class DetailsPage {
         var hours = date.getHours();
         var day = date.getDay();
         if(this.item.populartimes!=null){
+          // get the data from firebase
           this.item.currentPop = this.item.populartimes[day-1]["data"][hours];
         } else{
+          // if the data doesn't exist
           this.item.currentPop = 0;
         }
         this.temp = adb.object('/cafe_list/' + this.item.number);
