@@ -20,28 +20,34 @@ import { LaunchNavigator, LaunchNavigatorOptions } from '@ionic-native/launch-na
 
    item: Cafe;
    name: string;
-   temp: AngularFireObject<any>;
+   cafes: AngularFireObject<any>;
    destination:string;
    start:string;
-   fullness: number;
+   percent: number;
+
 
 
    constructor(public navCtrl: NavController, private navParams: NavParams, private  adb: AngularFireDatabase, private launchNavigator: LaunchNavigator) {
     this.item = this.navParams.data;
     this.start = "";
-    this.fullness = this.item.fullness;
+    // this.percent = this.item.fullness;
+    // this.percent = this.adb.list('/cafe_list/').valueChanges();
+
      // this.destination = this.item.address;
     var date = new Date();
     var hours = date.getHours();
     var day = date.getDay();
-    if(this.item.populartimes!=null){
+    if(this.item.populartimes != null){
           // get the data from firebase
           this.item.currentPop = this.item.populartimes[day-1]["data"][hours];
         } else{
           // if the data doesn't exist
           this.item.currentPop = 0;
         }
-        this.temp = adb.object('/cafe_list/' + this.item.number);
+        this.cafes = adb.object('/cafe_list/' + this.item.number);
+        // this.percent = adb.object('/cafe_list/percent')
+        // this.percent = this.cafes.valueChanges()
+        // alert(this.percent)
       }
       navigate(){
         let options: LaunchNavigatorOptions = {
@@ -57,7 +63,7 @@ import { LaunchNavigator, LaunchNavigatorOptions } from '@ionic-native/launch-na
 
       updateStatus(color: any) {
         this.item.status = color.status;
-        this.temp.update(color);
+        this.cafes.update(color);
       }
 
 

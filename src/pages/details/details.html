@@ -24,7 +24,7 @@
         <button ion-button (click)="updateStatus({'status': 'red'})" color="danger" block>Full</button> -->
         <ion-item>
           <ion-label>How full is {{item.name}}?</ion-label>
-          <ion-range min="0" max="100" step="1" color="secondary" [(ngModel)]="fullness"></ion-range>
+          <ion-range min="0" max="100" step="5" color="secondary" [(ngModel)]= item.percent></ion-range>
         </ion-item>
 
     </p>
