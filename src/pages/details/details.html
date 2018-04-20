@@ -19,9 +19,14 @@
       </button>
     </ion-list>
     <p padding>
-        <button ion-button (click)="updateStatus({'status': 'green'})" color="secondary" block>Empty</button>
+        <!-- <button ion-button (click)="updateStatus({'status': 'green'})" color="secondary" block>Empty</button>
         <button ion-button (click)="updateStatus({'status': 'orange'})" color="orange" block>Filling</button>
-        <button ion-button (click)="updateStatus({'status': 'red'})" color="danger" block>Full</button>
+        <button ion-button (click)="updateStatus({'status': 'red'})" color="danger" block>Full</button> -->
+        <ion-item>
+          <ion-label>How full is {{item.name}}?</ion-label>
+          <ion-range min="0" max="100" step="1" color="secondary" [(ngModel)]="fullness"></ion-range>
+        </ion-item>
+
     </p>
 
       <ion-list detail-none>
