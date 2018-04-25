@@ -35,10 +35,10 @@
               <ion-icon name='ios-time-outline' item-start></ion-icon>
               Estimated Current Popularity: {{item.currentPop}}%
           </button>
-          <button ion-item>
+          <a href = "{{item.website}}" ion-item>
             <ion-icon name='ios-globe-outline' item-start></ion-icon>
             Website
-          </button>
+          </a>
              <button ion-button (click)= "navigate()"  block> <ion-icon name='ios-pin-outline' item-start></ion-icon>
                  Directions</button>
           <div style="display: block">
