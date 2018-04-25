@@ -17,7 +17,6 @@ export class HomePage {
     	this.cafe_list.subscribe(items => {
     		items.forEach(item =>{
     			var newStatus = chooseColor(getCurrentPop(item));
-    			console.log(item.number);
     			this.adb.object('/cafe_list/'+item.number).update({ status: newStatus}); 
     		});
     	});

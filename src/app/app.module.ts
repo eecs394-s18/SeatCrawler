@@ -16,6 +16,8 @@ import { LaunchNavigator } from '@ionic-native/launch-navigator';
 import { AngularFireDatabaseModule } from 'angularfire2/database';
 import { AngularFireModule } from 'angularfire2';
 
+import { ChartsModule } from 'ng2-charts';
+
 
 
 
@@ -43,6 +45,7 @@ const firebaseConfig = {
     IonicModule.forRoot(MyApp),
     AngularFireDatabaseModule,
     AngularFireModule.initializeApp(firebaseConfig),
+    ChartsModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [

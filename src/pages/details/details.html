@@ -1,6 +1,8 @@
 <ion-header>
+  
   <ion-navbar>
     <ion-title>Details</ion-title>
+      
   </ion-navbar>
 </ion-header>
 
@@ -39,12 +41,42 @@
           </button>
              <button ion-button (click)= "navigate()"  block> <ion-icon name='ios-pin-outline' item-start></ion-icon>
                  Directions</button>
+          <div style="display: block">
+              <canvas baseChart
+                    [datasets]="barChartData"
+                    [labels]="barChartLabels"
+                    [options]="barChartOptions"
+                    [legend]="barChartLegend"
+                    [chartType]="barChartType"
+                    (chartHover)="chartHovered($event)"
+                    (chartClick)="chartClicked($event)">
+              </canvas>
+          </div>
+          <p>{{oppeningInfo}}</p>
+          <ion-list>
+            <ion-item>
+              <ion-label>Popular times</ion-label>
+              <ion-select [(ngModel)]="chosenDay" (ionChange)="updateDataOfDay()">
+                <ion-option value="1" >Monday</ion-option>
+                <ion-option value="2" >Tuesday</ion-option>
+                <ion-option value="3" >Wednesday</ion-option>
+                <ion-option value="4" >Thursday</ion-option>
+                <ion-option value="5" >Friday</ion-option>
+                <ion-option value="6" >Saturday</ion-option>
+                <ion-option value="7" >Sunday</ion-option>
+              </ion-select>
+            </ion-item>
+          </ion-list>
+          
+          
          <!--  <button ion-item> OLD BUTTON
               <ion-icon name='ios-pin-outline' item-start></ion-icon>
               Direction
           </button> -->
       </ion-list>
   </ion-card>
+
+  
 
 
 

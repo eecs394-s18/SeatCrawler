@@ -21,37 +21,55 @@ export class DetailsPage {
     item: Cafe;
     name: string;
     temp: AngularFireObject<any>;
-      destination:string;
-  start:string;
-
+    destination:string;
+    start:string;
+    oppeningInfo: string;
+    chosenDay: string;
+    public barChartOptions:any = {
+      scaleShowVerticalLines: false,
+      responsive: true
+    };
+    public barChartLabels:string[] = ['', '', '', '9:00', 
+    '', '', '12:00','', '', '15:00',
+    '', '', '18:00','', '', '21:00','', ''];
+    public barChartType:string = 'bar';
+    public barChartLegend:boolean = true;
+    public barChartData:any[] = [
+      {data: [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0], label: 'Popular times'},
+    ];
 
     constructor(public navCtrl: NavController, private navParams: NavParams, private  adb: AngularFireDatabase, private launchNavigator: LaunchNavigator
 ) {
-   
-        this.item = this.navParams.data;
-         this.start = "";
-   // this.destination = this.item.address;
-        var date = new Date();
-        var hours = date.getHours();
-        var day = date.getDay();
-        if(this.item.populartimes!=null){
-          // get the data from firebase
-          this.item.currentPop = this.item.populartimes[day-1]["data"][hours];
-        } else{
-          // if the data doesn't exist
-          this.item.currentPop = 0;
-        }
-        this.temp = adb.object('/cafe_list/' + this.item.number);
+      this.item = this.navParams.data;
+      this.start = "";
+ // this.destination = this.item.address;
+      var date = new Date();
+      var hours = date.getHours();
+      var day = date.getDay();
+      if(this.item.populartimes!=null){
+        // get the data from firebase
+        this.item.currentPop = this.item.populartimes[day-1]["data"][hours];
+        this.barChartData[0].data = this.item.populartimes[day-1]["data"].slice(6, 24);
+        this.barChartData[0].label = 'Popular times in ' + this.item.populartimes[day-1].name;
+        this.oppeningInfo = "";
+        this.chosenDay = day.toString();
+      } else{
+        // if the data doesn't exist
+        
+        this.oppeningInfo = "It closed this day - please pick another day";
+        this.item.currentPop = 0;
+      }
+      this.temp = adb.object('/cafe_list/' + this.item.number);
     }
-navigate(){
-    let options: LaunchNavigatorOptions = {
-      start: this.start
-    };
-    this.launchNavigator.navigate(this.item.address, options)
-        .then(
-            success => alert('Launched navigator'),
-            error => alert('Error launching navigator: ' + error)
-    );
+    navigate(){
+      let options: LaunchNavigatorOptions = {
+        start: this.start
+      };
+      this.launchNavigator.navigate(this.item.address, options)
+          .then(
+              success => alert('Launched navigator'),
+              error => alert('Error launching navigator: ' + error)
+      );
     }
 
     updateStatus(color: any) {
@@ -59,5 +77,21 @@ navigate(){
       this.temp.update(color);
     }
 
+    updateDataOfDay():void {
+      if(this.item.populartimes!=null){
+        // get the data from firebase
+        var day = parseInt(this.chosenDay);
+        console.log(day);
+        let clone = JSON.parse(JSON.stringify(this.barChartData));
+        clone[0].data = this.item.populartimes[day-1]["data"].slice(6, 24);
+        clone[0].label = 'Popular times in ' + this.item.populartimes[day-1].name;
+        this.barChartData = clone;
+        this.oppeningInfo = "";
+      } else{
+        // if the data doesn't exist
+        this.oppeningInfo = "It closed this day - please pick another day";
+      }
+    }
+    
 
 }
