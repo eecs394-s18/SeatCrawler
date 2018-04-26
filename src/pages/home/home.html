@@ -12,7 +12,9 @@
             [navParams]="item">
       {{ item["name"] }}
       <ion-icon [ngStyle]="{'color': item.status, 'position': 'absolute', 'right': '15px' }"  name="radio-button-on"></ion-icon>
-      <p [ngStyle]="{'float': 'right', 'margin-right': '25px'}">{{Compute_distance(item["geometry"]["location"])}}   miles</p>
+      <p [ngStyle]="{'float': 'right', 'margin-right': '25px'}">
+        <!--{{Compute_distance(item["geometry"]["location"])}}   -->
+        miles</p>ç
     </button>
   </ion-list>
   <h1>
