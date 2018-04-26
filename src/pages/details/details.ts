@@ -44,6 +44,7 @@ export class DetailsPage {
     var date = new Date();
     var hours = date.getHours();
     var day = date.getDay();
+    this.cafe = adb.object('/cafe_list/' + this.item.number);
     this.applemaps="http://maps.apple.com/?q="+this.item.address;
 
     if (this.item.populartimes!=null) {
@@ -59,7 +60,7 @@ export class DetailsPage {
       this.oppeningInfo = "It closed this day - please pick another day";
       this.item.currentPop = 0;
     }
-    this.cafe = adb.object('/cafe_list/' + this.item.number);
+    
   }
   navigate(){
     if (this.platform.is('mobileweb') || this.platform.is('core')) {

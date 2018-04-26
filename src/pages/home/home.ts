@@ -39,7 +39,9 @@ export class HomePage
         {
             console.log('Error getting location', error);
         });
-
+        console.log("YO!")
+        console.log(this.results)
+        /*
         for (var res in this.results)
         {
             this.cafe_list.subscribe(items => 
@@ -54,6 +56,7 @@ export class HomePage
                 });
             });
         }
+        */
     };
 }
 
