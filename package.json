@@ -44,7 +44,8 @@
     "npm": "^5.8.0",
     "rxjs": "5.5.8",
     "sw-toolbox": "3.6.0",
-    "zone.js": "0.8.20"
+    "zone.js": "0.8.20",
+    "cordova-browser": "5.0.3"
   },
   "devDependencies": {
     "@angular/cli": "^1.7.4",
@@ -65,6 +66,9 @@
         "LOCATION_ALWAYS_USAGE_DESCRIPTION": "This app wants to get your location always, even this app runs in background."
       },
       "cordova-plugin-advanced-http": {}
-    }
+    },
+    "platforms": [
+      "browser"
+    ]
   }
 }
