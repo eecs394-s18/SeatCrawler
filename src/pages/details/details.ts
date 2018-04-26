@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { NavController, NavParams} from 'ionic-angular';
+import { NavController, NavParams, Platform} from 'ionic-angular';
 import {Cafe} from "../../app/cafe";
 import {AngularFireDatabase, AngularFireObject} from 'angularfire2/database';
 import { LaunchNavigator, LaunchNavigatorOptions } from '@ionic-native/launch-navigator';
@@ -24,10 +24,11 @@ import { LaunchNavigator, LaunchNavigatorOptions } from '@ionic-native/launch-na
    destination:string;
    start:string;
    percent: number;
+   applemaps:string;
 
 
 
-   constructor(public navCtrl: NavController, private navParams: NavParams, private  adb: AngularFireDatabase, private launchNavigator: LaunchNavigator) {
+   constructor(public navCtrl: NavController, public platform: Platform, private navParams: NavParams, private  adb: AngularFireDatabase, private launchNavigator: LaunchNavigator) {
     this.item = this.navParams.data;
     this.start = "";
     // this.percent = this.item.fullness;
@@ -37,6 +38,9 @@ import { LaunchNavigator, LaunchNavigatorOptions } from '@ionic-native/launch-na
     var date = new Date();
     var hours = date.getHours();
     var day = date.getDay();
+    //generates applemaps URL
+         this.applemaps="http://maps.apple.com/?q="+this.item.address;
+
     if(this.item.populartimes != null){
           // get the data from firebase
           this.item.currentPop = this.item.populartimes[day-1]["data"][hours];
@@ -50,6 +54,12 @@ import { LaunchNavigator, LaunchNavigatorOptions } from '@ionic-native/launch-na
         // alert(this.percent)
       }
       navigate(){
+            if (this.platform.is('mobileweb') || this.platform.is('core')) {
+      // This will only print when running on desktop
+      console.log("I'm a regular browser!");
+      window.open(this.applemaps,"_self");
+    }
+    else {
         let options: LaunchNavigatorOptions = {
           start: this.start
         };
@@ -59,7 +69,7 @@ import { LaunchNavigator, LaunchNavigatorOptions } from '@ionic-native/launch-na
           error => alert('Error launching navigator: ' + error)
           );
       }
-
+}
 
       updateStatus(color: any) {
         this.item.status = color.status;
