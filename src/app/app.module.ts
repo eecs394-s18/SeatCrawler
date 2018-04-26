@@ -2,7 +2,6 @@ import { NgModule, ErrorHandler } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
 import { MyApp } from './app.component';
-
 import { AboutPage } from '../pages/about/about';
 import { ContactPage } from '../pages/contact/contact';
 import { HomePage } from '../pages/home/home';
@@ -15,9 +14,11 @@ import { LaunchNavigator } from '@ionic-native/launch-navigator';
 
 import { AngularFireDatabaseModule } from 'angularfire2/database';
 import { AngularFireModule } from 'angularfire2';
-
-
-
+import { HttpClientModule} from "@angular/common/http";
+import { Geolocation} from "@ionic-native/geolocation";
+import { HTTP} from "@ionic-native/http";
+import {GoogleMaps} from "@ionic-native/google-maps";
+import { Spherical} from "@ionic-native/google-maps";
 
 const firebaseConfig = {
     apiKey: "AIzaSyAryT4pHE0I-ZFB7Y-cYV-mR-SjB7gJs0Q",
@@ -43,6 +44,7 @@ const firebaseConfig = {
     IonicModule.forRoot(MyApp),
     AngularFireDatabaseModule,
     AngularFireModule.initializeApp(firebaseConfig),
+    HttpClientModule,
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -51,12 +53,16 @@ const firebaseConfig = {
     ContactPage,
     HomePage,
     TabsPage,
-      DetailsPage,
+    DetailsPage,
   ],
   providers: [
     StatusBar,
     SplashScreen,
     LaunchNavigator,
+    Geolocation,
+    HTTP,
+    GoogleMaps,
+    Spherical,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
   ]
 })

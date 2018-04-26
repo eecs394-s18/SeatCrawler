@@ -6,15 +6,18 @@
 
 <ion-content>
   <ion-list>
-    <button ion-item *ngFor="let item of cafe_list | async"
+    <button ion-item *ngFor="let item of results"
             detail-none
             [navPush]="pagedetails"
             [navParams]="item">
-      {{ item.name }}
+      {{ item["name"] }}
       <ion-icon [ngStyle]="{'color': item.status, 'position': 'absolute', 'right': '15px' }"  name="radio-button-on"></ion-icon>
-      <p [ngStyle]="{'float': 'right', 'margin-right': '25px'}"> {{item.distance}} miles</p>
+      <p [ngStyle]="{'float': 'right', 'margin-right': '25px'}">{{Compute_distance(item["geometry"]["location"])}}   miles</p>
     </button>
   </ion-list>
+  <h1>
+  {{coords}}
+  </h1>
 
 
 </ion-content>
