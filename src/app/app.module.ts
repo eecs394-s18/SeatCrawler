@@ -2,7 +2,6 @@ import { NgModule, ErrorHandler } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
 import { MyApp } from './app.component';
-
 import { AboutPage } from '../pages/about/about';
 import { ContactPage } from '../pages/contact/contact';
 import { HomePage } from '../pages/home/home';
@@ -18,7 +17,11 @@ import { AngularFireModule } from 'angularfire2';
 
 import { ChartsModule } from 'ng2-charts';
 
-
+import { HttpClientModule} from "@angular/common/http";
+import { Geolocation} from "@ionic-native/geolocation";
+import { HTTP} from "@ionic-native/http";
+import {GoogleMaps} from "@ionic-native/google-maps";
+import { Spherical} from "@ionic-native/google-maps";
 
 
 const firebaseConfig = {
@@ -45,7 +48,10 @@ const firebaseConfig = {
     IonicModule.forRoot(MyApp),
     AngularFireDatabaseModule,
     AngularFireModule.initializeApp(firebaseConfig),
-    ChartsModule
+
+    ChartsModule,
+
+    HttpClientModule,
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -54,12 +60,16 @@ const firebaseConfig = {
     ContactPage,
     HomePage,
     TabsPage,
-      DetailsPage,
+    DetailsPage,
   ],
   providers: [
     StatusBar,
     SplashScreen,
     LaunchNavigator,
+    Geolocation,
+    HTTP,
+    GoogleMaps,
+    Spherical,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
   ]
 })
