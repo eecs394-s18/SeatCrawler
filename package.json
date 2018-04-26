@@ -21,7 +21,11 @@
     "@angular/http": "5.2.9",
     "@angular/platform-browser": "5.2.9",
     "@angular/platform-browser-dynamic": "5.2.9",
-    "@ionic-native/core": "4.6.0",
+    "@ionic-native/core": "^4.6.0",
+    "@ionic-native/geolocation": "^4.7.0",
+    "@ionic-native/google-maps": "^4.7.0",
+    "@ionic-native/http": "^4.7.0",
+    "@ionic-native/launch-navigator": "^4.7.0",
     "@ionic-native/splash-screen": "4.6.0",
     "@ionic-native/status-bar": "4.6.0",
     "@ionic/pro": "1.0.20",
@@ -29,12 +33,21 @@
     "cordova-ios": "4.5.4",
     "firebase": "^4.12.1",
     "angularfire2": "^5.0.0-rc.6.0",
+    "chart.js": "^2.7.2",
+    "cordova-plugin-advanced-http": "^1.11.1",
+    "cordova-plugin-file": "^6.0.1",
+    "cordova-plugin-geolocation": "^4.0.1",
+    "cordova-plugin-googlemaps": "^2.2.9",
+    "cordova-plugin-googlemaps-sdk": "git+https://github.com/mapsplugin/cordova-plugin-googlemaps-sdk.git#2.6.0",
+    "i": "^0.3.6",
     "ionic-angular": "3.9.2",
     "ionicons": "3.0.0",
+    "ng2-charts": "^1.6.0",
     "npm": "^5.8.0",
     "rxjs": "5.5.8",
     "sw-toolbox": "3.6.0",
-    "zone.js": "0.8.20"
+    "zone.js": "0.8.20",
+    "cordova-browser": "5.0.3"
   },
   "devDependencies": {
     "@angular/cli": "^1.7.4",
@@ -42,5 +55,22 @@
     "firebase": "^4.12.1",
     "typescript": "~2.6.2"
   },
-  "description": "An Ionic project"
+  "description": "An Ionic project",
+  "cordova": {
+    "plugins": {
+      "uk.co.workingedge.phonegap.plugin.launchnavigator": {},
+      "cordova-plugin-geolocation": {
+        "GEOLOCATION_USAGE_DESCRIPTION": "To locate you"
+      },
+      "cordova-plugin-googlemaps": {
+        "API_KEY_FOR_IOS": "“AIzaSyDYBD9kcnAd-Zcf-hn5d_Aq9Y2vLgqDfsw”",
+        "LOCATION_WHEN_IN_USE_DESCRIPTION": "This app wants to get your location while this app runs only.",
+        "LOCATION_ALWAYS_USAGE_DESCRIPTION": "This app wants to get your location always, even this app runs in background."
+      },
+      "cordova-plugin-advanced-http": {}
+    },
+    "platforms": [
+      "browser"
+    ]
+  }
 }
