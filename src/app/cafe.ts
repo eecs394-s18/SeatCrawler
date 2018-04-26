@@ -9,4 +9,5 @@ export class Cafe {
   populartimes: object;
   currentPop: number;
   currVistNum: number;
+  fullness: number;
 }
