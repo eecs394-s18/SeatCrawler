@@ -13,7 +13,7 @@ import { Spherical} from "@ionic-native/google-maps";
     selector: 'page-home',
     templateUrl: 'home.html'
 })
-export class HomePage 
+export class HomePage
 {
     cafe_list: Observable<any[]>;
     pagedetails = DetailsPage; //Jump another page
@@ -24,7 +24,7 @@ export class HomePage
     {
         this.cafe_list = this.adb.list('/cafe_list/').valueChanges();
 
-        this.geolocation.getCurrentPosition().then((resp) => 
+        this.geolocation.getCurrentPosition().then((resp) =>
         {
             this.http.get('https://maps.googleapis.com/maps/api/place/nearbysearch/json?location='+
             resp.coords.latitude +','
@@ -35,31 +35,38 @@ export class HomePage
               this.results = data["results"];
             });
             this.coords = new LatLng(resp.coords.latitude, resp.coords.longitude);
-        }).catch((error) => 
+        }).catch((error) =>
         {
             console.log('Error getting location', error);
         });
 
-        for (var res in this.results)
-        {
-            this.cafe_list.subscribe(items => 
-            {
-                items.forEach(item =>
-                {
-                    if (item.id == res['id'])
-                    {
-                        var newStatus = chooseColor(getCurrentPop(item));
-                        this.adb.object('/cafe_list/'+item.number).update({ status: newStatus}); 
-                    }
-                });
-            });
-        }
+        console.log(this.results);
+
+        // console.log(Object.keys(this.results).length);
+        // {
+        // //   console.log(var)
+        //     // this.cafe_list.subscribe(items =>
+        //     // {
+        //     //     items.forEach(item =>
+        //     //     {
+        //     //       console.log(item.id)
+        //     //         if (item.id == res['id'])
+        //     //         {
+        //     //             var newStatus = chooseColor(getCurrentPop(item));
+        //     //             this.adb.object('/cafe_list/'+item.number).update({ status: newStatus});
+        //     //         }
+        //     //     });
+        //     // });
+        // }
     };
+  Compute_distance(coords: ILatLng) {
+    return (this.spherical.computeDistanceBetween(this.coords,coords)/(1610)).toFixed(1);
+  }
+
+
 }
 
-function Compute_distance(coords: ILatLng) {
-    return (this.spherical.computeDistanceBetween(this.coords,coords)/(1610)).toFixed(1);
-}
+// function
 
 function chooseColor(pop){
     // choose color base on the current popularity
