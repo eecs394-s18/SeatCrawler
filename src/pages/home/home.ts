@@ -31,6 +31,7 @@ export class HomePage
         //this.cafe_list = this.adb.list('/cafe_list/').valueChanges();
         this.geolocation.getCurrentPosition().then((resp) =>
         {
+            var userCoords = new LatLng(resp.coords.latitude, resp.coords.longitude);
             this.http.get('https://maps.googleapis.com/maps/api/place/nearbysearch/json?location='+
             resp.coords.latitude +','
             +resp.coords.longitude +
@@ -44,11 +45,16 @@ export class HomePage
               var resLen = Object.keys(this.apiResults).length;
 
               while(i < resLen && showNum < maxShowLen){
-                  var id = this.apiResults[i].place_id;
+                  var apiResult = this.apiResults[i]
+                  var id = apiResult.place_id;
                   let res = this.adb.object('/cafe_list/'+id);
                   res.valueChanges().subscribe(item => {
                       if(item["id"]!=undefined){
-                        console.log(item["id"]);
+                        console.log(item);
+                        console.log(apiResult["geometry"]);
+                        item["distance"] = compute_distance(userCoords, item["coordinates"]);
+                        var newStatus = chooseColor(getCurrentPop(item));
+                        this.adb.object('/cafe_list/'+item["id"]).update({ status: newStatus});
                         this.show_list.push(item);
                         showNum++;
                       }
@@ -70,7 +76,7 @@ export class HomePage
               //this.cafe_list = this.angularList.valueChanges();
               //console.log(this.results);
             });
-            this.coords = new LatLng(resp.coords.latitude, resp.coords.longitude);
+            
         }).catch((error) =>
         {
             console.log('Error getting location', error);
@@ -93,11 +99,13 @@ export class HomePage
         //     // });
         // }
     };
-  Compute_distance(coords: ILatLng) {
-    return (this.spherical.computeDistanceBetween(this.coords,coords)/(1610)).toFixed(1);
-  }
+  
 
 
+}
+
+function compute_distance(coords1, coords2) {
+    return (Spherical.computeDistanceBetween(coords1,coords2)/(1610)).toFixed(1);
 }
 
 // function
