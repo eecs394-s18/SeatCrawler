@@ -16,9 +16,9 @@ import {Cafe} from "../../app/cafe";
 })
 export class HomePage
 {
-    cafe_list: Observable<any[]>;
+    cafe_list: Observable<any[]>; // cafe list from firebase
     angularList: AngularFireList<{}>;
-    pagedetails = DetailsPage; //Jump another page
+    pagedetails = DetailsPage; // Jump another page
     coords: LatLng;
     apiResults: any;
     show_list: Array<any>;
@@ -26,10 +26,11 @@ export class HomePage
 
     constructor(public navCtrl: NavController, public adb:  AngularFireDatabase, private http: HttpClient, private geolocation: Geolocation, private spherical: Spherical)
     {
-        var maxShowLen = 10;
+        var maxShowLen = 10; // max cafe num on home list page
         this.show_list = [];
         this.geolocation.getCurrentPosition().then((resp) =>
         {
+            // get user's current coordination using google's place nearbysearch api
             var userCoords = new LatLng(resp.coords.latitude, resp.coords.longitude);
             this.http.get('https://maps.googleapis.com/maps/api/place/nearbysearch/json?location='+
             resp.coords.latitude +','
@@ -48,6 +49,7 @@ export class HomePage
                   var id = apiResult.place_id;
                   let res = this.adb.object('/cafe_list/'+id);
                   res.valueChanges().subscribe(item => {
+                      // if cafe's id doesn't exist in firebase, add it to firebase with its distance info
                       if(item["id"]!=undefined){
 
                         item["distance"] = compute_distance(userCoords, item["coordinates"]);

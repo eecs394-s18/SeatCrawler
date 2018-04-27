@@ -35,7 +35,7 @@ export class DetailsPage {
   '', '', '18:00','', '', '21:00','', ''];
   public barChartType: string = 'bar';
   public barChartLegend: boolean = true;
-  public barChartData: any[] = [{data: [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0], label: 'Popular times'}];
+  public barChartData: any[] = [{data: [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0], label: 'Popular times graph'}];
 
   constructor(public navCtrl: NavController, public platform: Platform, private navParams: NavParams, private  adb: AngularFireDatabase, private launchNavigator: LaunchNavigator)
   {
@@ -50,13 +50,13 @@ export class DetailsPage {
       // get the data from firebase
       this.item.currentPop = this.item.populartimes[day-1]["data"][hours];
       this.barChartData[0].data = this.item.populartimes[day-1]["data"].slice(6, 24);
-      this.barChartData[0].label = 'Popular times in ' + this.item.populartimes[day-1].name;
+      this.barChartData[0].label = 'Estimated Current Popularity on ' + this.item.populartimes[day-1].name;
       this.oppeningInfo = "";
       this.chosenDay = day.toString();
     } else{
-      // if the data doesn't exist
 
-      this.oppeningInfo = "It closed this day - please pick another day";
+      // if the data doesn't exist, we assume the cafe is closed
+      this.oppeningInfo = "It closes this day. Please pick another day!";
       this.item.currentPop = 0;
     }
     this.cafe = adb.object('/cafe_list/' + this.item.place_id);
@@ -79,13 +79,14 @@ export class DetailsPage {
   }
 
   updateStatus(color: any) {
+    // update colored button if user changes color status
     this.item.status = color.status;
     this.cafe.update(color);
   }
 
   updateDataOfDay():void {
     if(this.item.populartimes!=null){
-      // get the data from firebase
+      // if the data exists in firebase, get them from firebase and parse popular times info
       var day = parseInt(this.chosenDay);
       let clone = JSON.parse(JSON.stringify(this.barChartData));
       clone[0].data = this.item.populartimes[day-1]["data"].slice(6, 24);
@@ -93,8 +94,8 @@ export class DetailsPage {
       this.barChartData = clone;
       this.oppeningInfo = "";
     } else{
-      // if the data doesn't exist
-      this.oppeningInfo = "It closed this day - please pick another day";
+      // if the data doesn't exist, we assume the cafe is closed
+      this.oppeningInfo = "It closes this day. Please pick another day!";
     }
   }
 }
