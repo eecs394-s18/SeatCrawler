@@ -30,7 +30,7 @@ export class DetailsPage {
     scaleShowVerticalLines: false,
     responsive: true
   };
-  public barChartLabels: string[] = ['', '', '', '9:00', 
+  public barChartLabels: string[] = ['', '', '', '9:00',
   '', '', '12:00','', '', '15:00',
   '', '', '18:00','', '', '21:00','', ''];
   public barChartType: string = 'bar';
@@ -55,12 +55,11 @@ export class DetailsPage {
       this.chosenDay = day.toString();
     } else{
       // if the data doesn't exist
-      
+
       this.oppeningInfo = "It closed this day - please pick another day";
       this.item.currentPop = 0;
     }
     this.cafe = adb.object('/cafe_list/' + this.item.place_id);
-    console.log(this.item);
   }
   navigate(){
     if (this.platform.is('mobileweb') || this.platform.is('core')) {
