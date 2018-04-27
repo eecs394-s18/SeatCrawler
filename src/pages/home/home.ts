@@ -52,7 +52,7 @@ export class HomePage
                       if(item["id"]!=undefined){
                         console.log(item);
                         console.log(apiResult["geometry"]);
-                        item["distance"] = compute_distance(userCoords, item["coordinates"]);
+                        //item["distance"] = compute_distance(userCoords, item["coordinates"]);
                         var newStatus = chooseColor(getCurrentPop(item));
                         this.adb.object('/cafe_list/'+item["id"]).update({ status: newStatus});
                         this.show_list.push(item);
