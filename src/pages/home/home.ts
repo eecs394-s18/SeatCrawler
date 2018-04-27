@@ -50,9 +50,9 @@ export class HomePage
                   let res = this.adb.object('/cafe_list/'+id);
                   res.valueChanges().subscribe(item => {
                       if(item["id"]!=undefined){
-                        console.log(item);
-                        console.log(apiResult["geometry"]);
-                        //item["distance"] = compute_distance(userCoords, item["coordinates"]);
+                        //console.log(item);
+                        //console.log(apiResult["geometry"]);
+                        item["distance"] = compute_distance(userCoords, item["coordinates"]);
                         var newStatus = chooseColor(getCurrentPop(item));
                         this.adb.object('/cafe_list/'+item["id"]).update({ status: newStatus});
                         this.show_list.push(item);
@@ -61,51 +61,22 @@ export class HomePage
                   });
                   i++;
               }
-              /*
-              for(var i = 0; i <  i++){
-                  var id = this.apiResults[i].place_id;
-                  let res = this.adb.object('/cafe_list/'+id);
-                  //res.update({"find":"true"});
-                  res.valueChanges().subscribe(item => {
-                        console.log(item["id"]);
-                  });
-                  
-                  //this.angularList.push(res);
-              }
-              */
-              //this.cafe_list = this.angularList.valueChanges();
-              //console.log(this.results);
             });
             
         }).catch((error) =>
         {
             console.log('Error getting location', error);
         });
-
-        // console.log(Object.keys(this.results).length);
-        // {
-        // //   console.log(var)
-        //     // this.cafe_list.subscribe(items =>
-        //     // {
-        //     //     items.forEach(item =>
-        //     //     {
-        //     //       console.log(item.id)
-        //     //         if (item.id == res['id'])
-        //     //         {
-        //     //             var newStatus = chooseColor(getCurrentPop(item));
-        //     //             this.adb.object('/cafe_list/'+item.number).update({ status: newStatus});
-        //     //         }
-        //     //     });
-        //     // });
-        // }
     };
-  
-
-
 }
 
 function compute_distance(coords1, coords2) {
-    return (Spherical.computeDistanceBetween(coords1,coords2)/(1610)).toFixed(1);
+    //google plugin version  -- driving distance
+    //return (Spherical.computeDistanceBetween(coords1,coords2)/(1610)).toFixed(1);
+    
+    //temporary version   -- straight-line distance 
+    var dis = (getDistanceFromLatLonInKm(coords1["lat"],coords1["lng"],coords2["lat"],coords2["lng"])/1.61).toFixed(1);
+    return dis;
 }
 
 // function
@@ -136,4 +107,22 @@ function getCurrentPop(cafe){
         return cafe.populartimes[day-1]["data"][hours];
         // get the data from firebase
     }
+}
+
+function getDistanceFromLatLonInKm(lat1,lon1,lat2,lon2) {
+  var R = 6371; // Radius of the earth in km
+  var dLat = deg2rad(lat2-lat1);  // deg2rad below
+  var dLon = deg2rad(lon2-lon1); 
+  var a = 
+    Math.sin(dLat/2) * Math.sin(dLat/2) +
+    Math.cos(deg2rad(lat1)) * Math.cos(deg2rad(lat2)) * 
+    Math.sin(dLon/2) * Math.sin(dLon/2)
+    ; 
+  var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a)); 
+  var d = R * c; // Distance in km
+  return d;
+}
+
+function deg2rad(deg) {
+  return deg * (Math.PI/180)
 }
