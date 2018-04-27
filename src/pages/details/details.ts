@@ -45,6 +45,16 @@ export class DetailsPage {
     var hours = date.getHours();
     var day = date.getDay();
     this.applemaps="http://maps.apple.com/?q="+this.item.address;
+    //kind of inefficient, but i couldnt call the function changeGradient here for some reason
+    if (this.item.busyness[0][1]/100 <= 0.3){
+      this.item.color = "secondary";
+    }
+    else if(this.item.busyness[0][1]/100 <= 0.6){
+      this.item.color = "orange"
+    }
+    else {
+      this.item.color = "danger";
+    }
 
     if (this.item.populartimes!=null) {
       // get the data from firebase
@@ -82,6 +92,20 @@ export class DetailsPage {
     // update colored button if user changes color status
     this.item.status = color.status;
     this.cafe.update(color);
+  }
+
+  changeGradient(ratio: any, timestamp: any){
+    if (ratio <= 0.3){
+      this.item.color = "secondary";
+    }
+    else if(ratio <= 0.6){
+      this.item.color = "orange"
+    }
+    else {
+      this.item.color = "danger";
+    }
+    var busyness = {'busyness': {'0': [timestamp, ratio*100] }}
+    this.cafes.update(busyness)
   }
 
   updateDataOfDay():void {
