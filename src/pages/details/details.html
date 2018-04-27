@@ -10,7 +10,7 @@
 
   <ion-card class="cards-list-demo">
     <ion-card-header>
-      {{item.name}}
+      {{item["name"]}}
     </ion-card-header>
 
     <ion-list detail-none>
@@ -25,7 +25,7 @@
         <button ion-button (click)="updateStatus({'status': 'orange'})" color="orange" block>Filling</button>
         <button ion-button (click)="updateStatus({'status': 'red'})" color="danger" block>Full</button> -->
         <ion-item>
-          <ion-label>How full is {{item.name}}?</ion-label>
+          <ion-label>How full is {{item["name"]}}?</ion-label>
           <ion-range min="0" max="100" step="5" color="secondary" [(ngModel)]= item.percent></ion-range>
         </ion-item>
 
@@ -34,13 +34,13 @@
       <ion-list detail-none>
           <button ion-item text-wrap>
               <ion-icon name='ios-link-outline' item-start></ion-icon>
-                {{item.address}}
+                {{item["address"]}}
           </button>
           <button ion-item detail-none>
               <ion-icon name='ios-time-outline' item-start></ion-icon>
-              Estimated Current Popularity: {{item.currentPop}}%
+              Estimated Current Popularity: {{item["currentPop"]}}%
           </button>
-          <a href = "{{item.website}}" ion-item>
+          <a href = "{{item['website']}}" ion-item>
             <ion-icon name='ios-globe-outline' item-start></ion-icon>
             Website
           </a>

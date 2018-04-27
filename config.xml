@@ -86,16 +86,16 @@
     <edit-config file="*-Info.plist" mode="merge" target="NSLocationWhenInUseUsageDescription">
         <string>Required to send machine location.</string>
     </edit-config>
+    <plugin name="cordova-plugin-geolocation" spec="^4.0.1">
+        <variable name="GEOLOCATION_USAGE_DESCRIPTION" value="To locate you" />
+    </plugin>
+    <plugin name="cordova-plugin-advanced-http" spec="^1.11.1" />
+    <plugin name="cordova.plugins.diagnostic" spec="^4.0.5" />
     <plugin name="cordova-plugin-googlemaps" spec="^2.2.9">
         <variable name="API_KEY_FOR_IOS" value="AIzaSyDYBD9kcnAd-Zcf-hn5d_Aq9Y2vLgqDfsw" />
         <variable name="API_KEY_FOR_ANDROID" value="(API_KEY_FOR_ANDROID)" />
         <variable name="LOCATION_WHEN_IN_USE_DESCRIPTION" value="This app wants to get your location while this app runs only." />
         <variable name="LOCATION_ALWAYS_USAGE_DESCRIPTION" value="This app wants to get your location always, even this app runs in background." />
     </plugin>
-    <plugin name="cordova-plugin-geolocation" spec="^4.0.1">
-        <variable name="GEOLOCATION_USAGE_DESCRIPTION" value="To locate you" />
-    </plugin>
-    <plugin name="cordova.plugins.diagnostic" spec="^4.0.5" />
-    <plugin name="cordova-plugin-advanced-http" spec="^1.11.1" />
     <engine name="browser" spec="5.0.3" />
 </widget>

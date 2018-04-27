@@ -59,7 +59,8 @@ export class DetailsPage {
       this.oppeningInfo = "It closed this day - please pick another day";
       this.item.currentPop = 0;
     }
-    this.cafe = adb.object('/cafe_list/' + this.item.number);
+    this.cafe = adb.object('/cafe_list/' + this.item.place_id);
+    console.log(this.item);
   }
   navigate(){
     if (this.platform.is('mobileweb') || this.platform.is('core')) {

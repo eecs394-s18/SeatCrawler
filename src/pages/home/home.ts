@@ -1,12 +1,13 @@
 import { Component} from '@angular/core';
 import { NavController } from 'ionic-angular';
 import { DetailsPage} from "../details/details";
-import { AngularFireDatabase,} from 'angularfire2/database';
+import { AngularFireDatabase,AngularFireList} from 'angularfire2/database';
 import { Observable } from 'rxjs/Observable';
 import {Geolocation} from "@ionic-native/geolocation";
 import {ILatLng, LatLng} from '@ionic-native/google-maps';//LocationService
 import {HttpClient} from "@angular/common/http";
 import { Spherical} from "@ionic-native/google-maps";
+import {Cafe} from "../../app/cafe";
 
 
 @Component({
@@ -16,14 +17,18 @@ import { Spherical} from "@ionic-native/google-maps";
 export class HomePage
 {
     cafe_list: Observable<any[]>;
+    angularList: AngularFireList<{}>;
     pagedetails = DetailsPage; //Jump another page
     coords: LatLng;
-    results: any;
+    apiResults: any;
+    show_list: Array<any>;
+    matchedResults: Observable<any[]>;
 
     constructor(public navCtrl: NavController, public adb:  AngularFireDatabase, private http: HttpClient, private geolocation: Geolocation, private spherical: Spherical)
     {
-        this.cafe_list = this.adb.list('/cafe_list/').valueChanges();
-
+        var maxShowLen = 10;
+        this.show_list = [];
+        //this.cafe_list = this.adb.list('/cafe_list/').valueChanges();
         this.geolocation.getCurrentPosition().then((resp) =>
         {
             this.http.get('https://maps.googleapis.com/maps/api/place/nearbysearch/json?location='+
@@ -32,15 +37,44 @@ export class HomePage
             '&rankby=distance&type=cafe&key=AIzaSyCfPG3wQmh-RMjmgY1F3xipVbmkvdq49RM').subscribe(
             data=>
             {
-              this.results = data["results"];
+              this.apiResults = data["results"];
+              this.matchedResults = this.apiResults;
+              var i = 0;
+              var showNum = 0;
+              var resLen = Object.keys(this.apiResults).length;
+
+              while(i < resLen && showNum < maxShowLen){
+                  var id = this.apiResults[i].place_id;
+                  let res = this.adb.object('/cafe_list/'+id);
+                  res.valueChanges().subscribe(item => {
+                      if(item["id"]!=undefined){
+                        console.log(item["id"]);
+                        this.show_list.push(item);
+                        showNum++;
+                      }
+                  });
+                  i++;
+              }
+              /*
+              for(var i = 0; i <  i++){
+                  var id = this.apiResults[i].place_id;
+                  let res = this.adb.object('/cafe_list/'+id);
+                  //res.update({"find":"true"});
+                  res.valueChanges().subscribe(item => {
+                        console.log(item["id"]);
+                  });
+                  
+                  //this.angularList.push(res);
+              }
+              */
+              //this.cafe_list = this.angularList.valueChanges();
+              //console.log(this.results);
             });
             this.coords = new LatLng(resp.coords.latitude, resp.coords.longitude);
         }).catch((error) =>
         {
             console.log('Error getting location', error);
         });
-
-        console.log(this.results);
 
         // console.log(Object.keys(this.results).length);
         // {
@@ -67,7 +101,6 @@ export class HomePage
 }
 
 // function
-
 function chooseColor(pop){
     // choose color base on the current popularity
     if(pop === -1) {
@@ -96,4 +129,3 @@ function getCurrentPop(cafe){
         // get the data from firebase
     }
 }
-

@@ -10,4 +10,6 @@ export class Cafe {
   currentPop: number;
   currVistNum: number;
   fullness: number;
+  place_id: number;
+  website: string;
 }
