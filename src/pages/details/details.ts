@@ -105,7 +105,7 @@ export class DetailsPage {
       this.item.color = "danger";
     }
     var busyness = {'busyness': {'0': [timestamp, ratio*100] }}
-    this.cafes.update(busyness)
+    this.cafe.update(busyness)
   }
 
   updateDataOfDay():void {
