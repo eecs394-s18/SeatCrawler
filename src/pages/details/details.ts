@@ -52,13 +52,14 @@ export class DetailsPage {
     if (this.item.populartimes!=null) {
       // get the data from firebase
       this.item.currentPop = this.item.populartimes[day-1]["data"][hours];
-      if (this.item.currentPop == 0) {
+      if (this.item.currentPop === 0) {
         // populartimes is 0
         this.oppeningInfo = "Cafe is closed today!";
+      } else {
+        this.oppeningInfo = "";
       }
       this.barChartData[0].data = this.item.populartimes[day-1]["data"].slice(6, 24);
       this.barChartData[0].label = 'Estimated Popularity on ' + this.item.populartimes[day-1].name;
-      this.oppeningInfo = "";
       this.chosenDay = day.toString();
     } else {
       // if the data doesn't exist in firebase

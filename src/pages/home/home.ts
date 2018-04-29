@@ -77,7 +77,6 @@ export class HomePage
 function compute_distance(coords1, coords2) {
     //google plugin version  -- driving distance
     //return (Spherical.computeDistanceBetween(coords1,coords2)/(1610)).toFixed(1);
-
     //temporary version   -- straight-line distance
     var dis = (getDistanceFromLatLonInKm(coords1["lat"],coords1["lng"],coords2["lat"],coords2["lng"])/1.61).toFixed(1);
     return dis;
