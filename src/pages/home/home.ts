@@ -75,6 +75,7 @@ export class HomePage
 }
 
 function compute_distance(coords1, coords2) {
+
     //temporary version   -- straight-line distance
     var dis = (getDistanceFromLatLonInKm(coords1["lat"],coords1["lng"],coords2["lat"],coords2["lng"])/1.61).toFixed(1);
     return dis;

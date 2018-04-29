@@ -1,7 +1,7 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title>Details</ion-title>
+    <ion-title>Details: {{item["name"]}}</ion-title>
 
   </ion-navbar>
 </ion-header>
@@ -9,32 +9,28 @@
 <ion-content class=" cards-bg">
 
   <ion-card class="cards-list-demo">
-    <ion-card-header>
-      {{item["name"]}}
-    </ion-card-header>
 
-    <ion-list detail-none>
-      <!-- user input seat availability -->
-      <button ion-item detail-none>
-        <ion-icon name='ios-stats-outline' item-start></ion-icon>
-        Current Seat Availability
-        {{item["status"]}}
-        <ion-icon [ngStyle]="{'color': item.status, 'position': 'absolute', 'right': '25px' }"  name="radio-button-on"></ion-icon>
-      </button>
-    </ion-list>
-    <p>
+
+    <ion-card-content>
+
+
+      <p>
 
         <ion-item>
           <ion-label>How full is {{item["name"]}}?</ion-label>
-          <ion-range #x (ionChange)="changeGradient(x.ratio, item.busyness[0][0])" min="0" max="100" step="5" color="{{item.color}}" [(ngModel)]= item.busyness[0][1]></ion-range>
-      <!--<button ion-button (click)="SetNewPercent()" color="danger">Submit</button>-->
 
-      <ion-item>
-          <ion-label>How full is {{item["name"]}} {{percent}}?</ion-label>
-          <ion-range min="0" max="100" step="5" color="secondary" [(ngModel)]= "percent"></ion-range>
+          <ion-range #x (ionChange)="changeGradient(x.ratio, item.busyness[0][0])" min="0" max="100" pin="true" step="5" color="{{item.color}}" [(ngModel)]= item.busyness[0][1]>
+            <ion-label range-left>0%</ion-label>
+            <ion-label range-right>100%</ion-label>
+          </ion-range>
         </ion-item>
-    </p>
-
+        <button padding ion-button (click)= "navigate()"  block [ngStyle]="{'width': '53%', 'margin': 'auto' }" color='secondary'>
+          SUBMIT
+        </button>
+      </p>
+    </ion-card-content>
+  </ion-card>
+  <ion-card class="cards-list-demo">
     <ion-list detail-none>
       <!-- cafe website link -->
       <a href = "{{item['website']}}" target="_blank" ion-item>
@@ -43,17 +39,19 @@
       </a>
       <!-- cafe address -->
       <button ion-item text-wrap>
-        <ion-icon name='ios-link-outline' item-start></ion-icon>
+
+        <ion-icon name='ios-home-outline' item-start></ion-icon>
+        {{item["address"]}}
       </button>
-        <!-- cafe direction (link to google map) -->
-      <button padding ion-button (click)= "navigate()"  block [ngStyle]="{'width': '90%', 'margin': 'auto' }"> <ion-icon name='ios-pin-outline' item-start></ion-icon>
-        Directions
+      <!-- cafe direction (link to google map) -->
+      <button padding ion-button (click)= "navigate()"  block [ngStyle]="{'width': '50%', 'margin': '5px auto' }"> <ion-icon name='ios-pin-outline' item-start></ion-icon>
+        <span style="margin-left: 5px;">Directions</span>
       </button>
       <ion-list>
         <!-- google popular times info  -->
         <button padding ion-item detail-none>
-            <ion-icon name='logo-google' item-start></ion-icon>
-            Estimated Current Popularity: {{item["currentPop"]}}%
+          <ion-icon name='logo-google' item-start></ion-icon>
+          Estimated Current Popularity: {{item["currentPop"]}}%
         </button>
       </ion-list>
       <!-- google popular times graph -->
@@ -72,7 +70,7 @@
         <ion-list>
           <ion-item>
             <ion-label block>
-              Popular times on
+              Historical Popularity on
             </ion-label>
             <ion-select [(ngModel)]="chosenDay" (ionChange)="updateDataOfDay()">
               <ion-option value="1" >Monday</ion-option>
@@ -85,5 +83,7 @@
             </ion-select>
           </ion-item>
 
-  </ion-card>
-</ion-content>
+        </ion-list>
+          </ion-list>
+        </ion-card>
+      </ion-content>
