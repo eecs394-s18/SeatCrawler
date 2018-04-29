@@ -44,6 +44,9 @@ export class DetailsPage {
     var date = new Date();
     var hours = date.getHours();
     var day = date.getDay();
+    if(day===0){ // the day is sunday
+        day = 7
+      }
     this.applemaps="http://maps.apple.com/?q="+this.item.address;
 
     if (this.item.populartimes!=null) {
