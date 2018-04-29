@@ -52,7 +52,7 @@
         <!-- google popular times info  -->
         <button padding ion-item detail-none>
             <ion-icon name='logo-google' item-start></ion-icon>
-            Estimated Current Popularity: {{item["currentPop"]}}%
+            Current Popularity: {{item["currentPop"]}}%
         </button>
       </ion-list>
       <!-- google popular times graph -->
@@ -71,7 +71,7 @@
         <ion-list>
           <ion-item>
             <ion-label block>
-              Popular times on
+              Historical Popularity on
             </ion-label>
             <ion-select [(ngModel)]="chosenDay" (ionChange)="updateDataOfDay()">
               <ion-option value="1" >Monday</ion-option>

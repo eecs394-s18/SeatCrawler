@@ -55,7 +55,6 @@ export class HomePage
                   		console.log("find one");
                   		console.log(item);
                       if(item!=null && item['id']!=undefined){
-                        
                         //console.log(apiResult["geometry"]);
                         item["distance"] = compute_distance(userCoords, item["coordinates"]);
                         var newStatus = chooseColor(getCurrentPop(item));

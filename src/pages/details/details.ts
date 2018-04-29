@@ -35,7 +35,7 @@ export class DetailsPage {
   '', '', '18:00','', '', '21:00','', ''];
   public barChartType: string = 'bar';
   public barChartLegend: boolean = true;
-  public barChartData: any[] = [{data: [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0], label: 'Popular times graph'}];
+  public barChartData: any[] = [{data: [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0], label: 'Historical Popularity'}];
 
   constructor(public navCtrl: NavController, public platform: Platform, private navParams: NavParams, private  adb: AngularFireDatabase, private launchNavigator: LaunchNavigator)
   {
@@ -52,13 +52,17 @@ export class DetailsPage {
     if (this.item.populartimes!=null) {
       // get the data from firebase
       this.item.currentPop = this.item.populartimes[day-1]["data"][hours];
+      if (this.item.currentPop == 0) {
+        // populartimes is 0
+        this.oppeningInfo = "Cafe is closed today!";
+      }
       this.barChartData[0].data = this.item.populartimes[day-1]["data"].slice(6, 24);
-      this.barChartData[0].label = 'Estimated Current Popularity on ' + this.item.populartimes[day-1].name;
+      this.barChartData[0].label = 'Estimated Popularity on ' + this.item.populartimes[day-1].name;
       this.oppeningInfo = "";
       this.chosenDay = day.toString();
-    } else{
-      // if the data doesn't exist, we assume the cafe is closed
-      this.oppeningInfo = "It closes this day. Please pick another day!";
+    } else {
+      // if the data doesn't exist in firebase
+      this.oppeningInfo = "Data currently not available!";
       this.item.currentPop = 0;
     }
     this.cafe = adb.object('/cafe_list/' + this.item.place_id);
@@ -118,12 +122,12 @@ export class DetailsPage {
       var day = parseInt(this.chosenDay);
       let clone = JSON.parse(JSON.stringify(this.barChartData));
       clone[0].data = this.item.populartimes[day-1]["data"].slice(6, 24);
-      clone[0].label = 'Popular times in ' + this.item.populartimes[day-1].name;
+      clone[0].label = 'Historical Popularity on ' + this.item.populartimes[day-1].name;
       this.barChartData = clone;
       this.oppeningInfo = "";
     } else{
       // if the data doesn't exist, we assume the cafe is closed
-      this.oppeningInfo = "It closes this day. Please pick another day!";
+      this.oppeningInfo = "Data currently not available!";
     }
   }
 }
