@@ -14,4 +14,5 @@ export class Cafe {
   fullness: number;
   place_id: number;
   website: string;
+  // busy_array: Array<number>;
 }

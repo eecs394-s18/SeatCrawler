@@ -4,11 +4,9 @@ import { DetailsPage} from "../details/details";
 import { AngularFireDatabase,AngularFireList} from 'angularfire2/database';
 import { Observable } from 'rxjs/Observable';
 import {Geolocation} from "@ionic-native/geolocation";
-import {ILatLng, LatLng} from '@ionic-native/google-maps';//LocationService
+import {LatLng} from '@ionic-native/google-maps';//LocationService
 import {HttpClient} from "@angular/common/http";
 import { Spherical} from "@ionic-native/google-maps";
-import {Cafe} from "../../app/cafe";
-
 
 @Component({
     selector: 'page-home',
@@ -33,9 +31,10 @@ export class HomePage
             // get user's current coordination using google's place nearbysearch api
             var userCoords = new LatLng(resp.coords.latitude, resp.coords.longitude);
             this.http.get('https://maps.googleapis.com/maps/api/place/nearbysearch/json?location='+
-            resp.coords.latitude +','
-            +resp.coords.longitude +
-            '&rankby=distance&type=cafe&key=AIzaSyCfPG3wQmh-RMjmgY1F3xipVbmkvdq49RM').subscribe(
+            resp.coords.latitude
+              + ',' +
+              resp.coords.longitude
+              + '&rankby=distance&type=cafe&key=AIzaSyCfPG3wQmh-RMjmgY1F3xipVbmkvdq49RM').subscribe(
             data=>
             {
               this.apiResults = data["results"];
@@ -57,7 +56,6 @@ export class HomePage
                   		console.log(item);
                       if(item!=null && item['id']!=undefined){
 
-                        //console.log(apiResult["geometry"]);
                         item["distance"] = compute_distance(userCoords, item["coordinates"]);
                         var newStatus = chooseColor(getCurrentPop(item));
                         this.adb.object('/cafe_list/'+item["id"]).update({ status: newStatus});
@@ -77,9 +75,6 @@ export class HomePage
 }
 
 function compute_distance(coords1, coords2) {
-    //google plugin version  -- driving distance
-    //return (Spherical.computeDistanceBetween(coords1,coords2)/(1610)).toFixed(1);
-
     //temporary version   -- straight-line distance
     var dis = (getDistanceFromLatLonInKm(coords1["lat"],coords1["lng"],coords2["lat"],coords2["lng"])/1.61).toFixed(1);
     return dis;

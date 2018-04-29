@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { NavController, NavParams, Platform} from 'ionic-angular';
 import {Cafe} from "../../app/cafe";
-import {AngularFireDatabase, AngularFireObject} from 'angularfire2/database';
+import {AngularFireDatabase,AngularFireObject} from 'angularfire2/database';
 import { LaunchNavigator, LaunchNavigatorOptions } from '@ionic-native/launch-navigator';
 
 /**
@@ -16,7 +16,7 @@ import { LaunchNavigator, LaunchNavigatorOptions } from '@ionic-native/launch-na
   templateUrl: 'details.html'
 })
 export class DetailsPage {
-  item: Cafe;
+  item: Cafe;//here the type of item has some non-consistency with 'Cafe'!!!!!!!!!!! Need to be revised
   name: string;
   cafe: AngularFireObject<any>;
   destination:string;
@@ -50,7 +50,7 @@ export class DetailsPage {
     this.applemaps="http://maps.apple.com/?q="+this.item.address;
 
     if (this.item.populartimes!=null) {
-      // get the data from firebase
+      // get the data from Firebase
       this.item.currentPop = this.item.populartimes[day-1]["data"][hours];
       this.barChartData[0].data = this.item.populartimes[day-1]["data"].slice(6, 24);
       this.barChartData[0].label = 'Estimated Current Popularity on ' + this.item.populartimes[day-1].name;
@@ -62,6 +62,7 @@ export class DetailsPage {
       this.oppeningInfo = "It closes this day. Please pick another day!";
       this.item.currentPop = 0;
     }
+    console.log(this.item.place_id);
     this.cafe = adb.object('/cafe_list/' + this.item.place_id);
 
     //kind of inefficient, but i couldnt call the function changeGradient here for some reason
@@ -75,6 +76,7 @@ export class DetailsPage {
       this.item.color = "danger";
     }
     console.log(this.item);
+
   }
   navigate(){
     if (this.platform.is('mobileweb') || this.platform.is('core')) {
@@ -128,4 +130,6 @@ export class DetailsPage {
       this.oppeningInfo = "It closes this day. Please pick another day!";
     }
   }
+
+
 }

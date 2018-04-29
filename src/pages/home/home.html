@@ -6,14 +6,15 @@
 
 <ion-content>
   <ion-list>
-    <button ion-item *ngFor="let item of show_list"
+    <button ion-item *ngFor="let item of show_list "
             detail-none
             [navPush]="pagedetails"
             [navParams]="item">
       {{ item["name"] }}
+
       <ion-icon [ngStyle]="{'color': item.status, 'position': 'absolute', 'right': '15px' }"  name="radio-button-on"></ion-icon>
       <p [ngStyle]="{'float': 'right', 'margin-right': '25px'}">
-        {{ item["distance"] }}
+        <!--{{ item["distance"] }}-->
         miles</p>
     </button>
   </ion-list>
