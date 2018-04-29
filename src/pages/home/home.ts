@@ -39,19 +39,25 @@ export class HomePage
             data=>
             {
               this.apiResults = data["results"];
+
+              console.log(this.apiResults);
+
               this.matchedResults = this.apiResults;
               var i = 0;
               var showNum = 0;
               var resLen = Object.keys(this.apiResults).length;
-
               while(i < resLen && showNum < maxShowLen){
                   var apiResult = this.apiResults[i]
                   var id = apiResult.place_id;
                   let res = this.adb.object('/cafe_list/'+id);
                   res.valueChanges().subscribe(item => {
                       // if cafe's id doesn't exist in firebase, add it to firebase with its distance info
-                      if(item["id"]!=undefined){
 
+                  		console.log("find one");
+                  		console.log(item);
+                      if(item!=null && item['id']!=undefined){
+
+                        //console.log(apiResult["geometry"]);
                         item["distance"] = compute_distance(userCoords, item["coordinates"]);
                         var newStatus = chooseColor(getCurrentPop(item));
                         this.adb.object('/cafe_list/'+item["id"]).update({ status: newStatus});
@@ -104,7 +110,10 @@ function getCurrentPop(cafe){
         return -1;
         // if the data doesn't exist, return -1 make the color become black
     }else{
-        return cafe.populartimes[day-1]["data"][hours];
+    	if(day===0){ // the day is sunday
+    		day = 7
+    	}
+        return cafe.populartimes[(day-1)]["data"][hours];
         // get the data from firebase
     }
 }

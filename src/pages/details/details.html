@@ -29,13 +29,13 @@
         <button ion-button (click)="updateStatus({'status': 'red'})" color="danger" block>Full</button> -->
         <ion-item>
           <ion-label>How full is {{item["name"]}}?</ion-label>
-          <ion-range min="0" max="100" step="5" color="secondary" [(ngModel)]= item.percent></ion-range>
+          <ion-range #x (ionChange)="changeGradient(x.ratio, item.busyness[0][0])" min="0" max="100" step="5" color="{{item.color}}" [(ngModel)]= item.busyness[0][1]></ion-range>
         </ion-item>
     </p>
 
     <ion-list detail-none>
       <!-- cafe website link -->
-      <a href = "{{item['website']}}" ion-item>
+      <a href = "{{item['website']}}" target="_blank" ion-item>
         <ion-icon name='ios-globe-outline' item-start></ion-icon>
         Website
       </a>
