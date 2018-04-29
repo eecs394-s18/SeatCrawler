@@ -16,9 +16,9 @@ import {Cafe} from "../../app/cafe";
 })
 export class HomePage
 {
-    cafe_list: Observable<any[]>;
+    cafe_list: Observable<any[]>; // cafe list from firebase
     angularList: AngularFireList<{}>;
-    pagedetails = DetailsPage; //Jump another page
+    pagedetails = DetailsPage; // Jump another page
     coords: LatLng;
     apiResults: any;
     show_list: Array<any>;
@@ -26,11 +26,12 @@ export class HomePage
 
     constructor(public navCtrl: NavController, public adb:  AngularFireDatabase, private http: HttpClient, private geolocation: Geolocation, private spherical: Spherical)
     {
-        var maxShowLen = 10;
+        var maxShowLen = 10; // max cafe num on home list page
         this.show_list = [];
         //this.cafe_list = this.adb.list('/cafe_list/').valueChanges();
         this.geolocation.getCurrentPosition().then((resp) =>
         {
+            // get user's current coordination using google's place nearbysearch api
             var userCoords = new LatLng(resp.coords.latitude, resp.coords.longitude);
             this.http.get('https://maps.googleapis.com/maps/api/place/nearbysearch/json?location='+
             resp.coords.latitude +','
@@ -66,7 +67,7 @@ export class HomePage
                   i++;
               }
             });
-            
+
         }).catch((error) =>
         {
             console.log('Error getting location', error);
@@ -77,8 +78,8 @@ export class HomePage
 function compute_distance(coords1, coords2) {
     //google plugin version  -- driving distance
     //return (Spherical.computeDistanceBetween(coords1,coords2)/(1610)).toFixed(1);
-    
-    //temporary version   -- straight-line distance 
+
+    //temporary version   -- straight-line distance
     var dis = (getDistanceFromLatLonInKm(coords1["lat"],coords1["lng"],coords2["lat"],coords2["lng"])/1.61).toFixed(1);
     return dis;
 }
@@ -119,13 +120,13 @@ function getCurrentPop(cafe){
 function getDistanceFromLatLonInKm(lat1,lon1,lat2,lon2) {
   var R = 6371; // Radius of the earth in km
   var dLat = deg2rad(lat2-lat1);  // deg2rad below
-  var dLon = deg2rad(lon2-lon1); 
-  var a = 
+  var dLon = deg2rad(lon2-lon1);
+  var a =
     Math.sin(dLat/2) * Math.sin(dLat/2) +
-    Math.cos(deg2rad(lat1)) * Math.cos(deg2rad(lat2)) * 
+    Math.cos(deg2rad(lat1)) * Math.cos(deg2rad(lat2)) *
     Math.sin(dLon/2) * Math.sin(dLon/2)
-    ; 
-  var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a)); 
+    ;
+  var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
   var d = R * c; // Distance in km
   return d;
 }

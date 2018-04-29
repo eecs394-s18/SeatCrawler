@@ -1,26 +1,29 @@
 <ion-header>
-  
+
   <ion-navbar>
     <ion-title>Details</ion-title>
-      
+
   </ion-navbar>
 </ion-header>
 
 <ion-content class=" cards-bg">
 
   <ion-card class="cards-list-demo">
+    <!-- Cafe name -->
     <ion-card-header>
       {{item["name"]}}
     </ion-card-header>
 
     <ion-list detail-none>
+      <!-- user input seat availability -->
       <button ion-item>
         <ion-icon name='ios-stats-outline' item-start></ion-icon>
-        Update current seat status
+        Current Seat Availability
         <ion-icon [ngStyle]="{'color': item.status, 'position': 'absolute', 'right': '25px' }"  name="radio-button-on"></ion-icon>
       </button>
     </ion-list>
-    <p padding>
+    <p>
+        <!-- button version of updating seat status -->
         <!-- <button ion-button (click)="updateStatus({'status': 'green'})" color="secondary" block>Empty</button>
         <button ion-button (click)="updateStatus({'status': 'orange'})" color="orange" block>Filling</button>
         <button ion-button (click)="updateStatus({'status': 'red'})" color="danger" block>Full</button> -->
@@ -28,56 +31,63 @@
           <ion-label>How full is {{item["name"]}}?</ion-label>
           <ion-range min="0" max="100" step="5" color="secondary" [(ngModel)]= item.percent></ion-range>
         </ion-item>
-
     </p>
 
-      <ion-list detail-none>
-          <button ion-item text-wrap>
-              <ion-icon name='ios-link-outline' item-start></ion-icon>
-                {{item["address"]}}
-          </button>
-          <button ion-item detail-none>
-              <ion-icon name='ios-time-outline' item-start></ion-icon>
-              Estimated Current Popularity: {{item["currentPop"]}}%
-          </button>
-          <a href = "{{item['website']}}" ion-item>
-            <ion-icon name='ios-globe-outline' item-start></ion-icon>
-            Website
-          </a>
-             <button ion-button (click)= "navigate()"  block> <ion-icon name='ios-pin-outline' item-start></ion-icon>
-                 Directions</button>
-          <div style="display: block">
-              <canvas baseChart
-                    [datasets]="barChartData"
-                    [labels]="barChartLabels"
-                    [options]="barChartOptions"
-                    [legend]="barChartLegend"
-                    [chartType]="barChartType"
-                    (chartHover)="chartHovered($event)"
-                    (chartClick)="chartClicked($event)">
-              </canvas>
-          </div>
-          <p>{{oppeningInfo}}</p>
-          <ion-list>
-            <ion-item>
-              <ion-label>Popular times</ion-label>
-              <ion-select [(ngModel)]="chosenDay" (ionChange)="updateDataOfDay()">
-                <ion-option value="1" >Monday</ion-option>
-                <ion-option value="2" >Tuesday</ion-option>
-                <ion-option value="3" >Wednesday</ion-option>
-                <ion-option value="4" >Thursday</ion-option>
-                <ion-option value="5" >Friday</ion-option>
-                <ion-option value="6" >Saturday</ion-option>
-                <ion-option value="7" >Sunday</ion-option>
-              </ion-select>
-            </ion-item>
-          </ion-list>
-          
-          
+    <ion-list detail-none>
+      <!-- cafe website link -->
+      <a href = "{{item['website']}}" target="_blank" ion-item>
+        <ion-icon name='ios-globe-outline' item-start></ion-icon>
+        Website
+      </a>
+      <!-- cafe address -->
+      <button ion-item text-wrap>
+        <ion-icon name='ios-link-outline' item-start></ion-icon>
+        {{item["address"]}}
+      </button>
+        <!-- cafe direction (link to google map) -->
+      <button padding ion-button (click)= "navigate()"  block [ngStyle]="{'width': '90%', 'margin': 'auto' }"> <ion-icon name='ios-pin-outline' item-start></ion-icon>
+        Directions
+      </button>
+      <ion-list>
+        <!-- google popular times info  -->
+        <button padding ion-item detail-none>
+            <ion-icon name='logo-google' item-start></ion-icon>
+            Estimated Current Popularity: {{item["currentPop"]}}%
+        </button>
+      </ion-list>
+      <!-- google popular times graph -->
+      <div style="display: block">
+        <canvas baseChart
+                [datasets]="barChartData"
+                [labels]="barChartLabels"
+                [options]="barChartOptions"
+                [legend]="barChartLegend"
+                [chartType]="barChartType"
+                (chartHover)="chartHovered($event)"
+                (chartClick)="chartClicked($event)">
+        </canvas>
+      </div>
+        <p [ngStyle]="{'text-align': 'center' }">{{oppeningInfo}}</p>
+        <ion-list>
+          <ion-item>
+            <ion-label block>
+              Popular times on
+            </ion-label>
+            <ion-select [(ngModel)]="chosenDay" (ionChange)="updateDataOfDay()">
+              <ion-option value="1" >Monday</ion-option>
+              <ion-option value="2" >Tuesday</ion-option>
+              <ion-option value="3" >Wednesday</ion-option>
+              <ion-option value="4" >Thursday</ion-option>
+              <ion-option value="5" >Friday</ion-option>
+              <ion-option value="6" >Saturday</ion-option>
+              <ion-option value="7" >Sunday</ion-option>
+            </ion-select>
+          </ion-item>
+        </ion-list>
          <!--  <button ion-item> OLD BUTTON
               <ion-icon name='ios-pin-outline' item-start></ion-icon>
               Direction
           </button> -->
-      </ion-list>
+    </ion-list>
   </ion-card>
 </ion-content>
