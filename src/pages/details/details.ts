@@ -1,8 +1,11 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams, Platform} from 'ionic-angular';
-import {Cafe} from "../../app/cafe";
-import {AngularFireDatabase,AngularFireObject} from 'angularfire2/database';
+import { Cafe} from "../../app/cafe";
+import { AngularFireDatabase,AngularFireObject} from 'angularfire2/database';
 import { LaunchNavigator, LaunchNavigatorOptions } from '@ionic-native/launch-navigator';
+import { timeInterval} from "rxjs/operators";
+import {Observable} from "rxjs/Observable";
+
 
 /**
  * Generated class for the DetailsPage page.
@@ -19,47 +22,51 @@ export class DetailsPage {
   item: Cafe;//here the type of item has some non-consistency with 'Cafe'!!!!!!!!!!! Need to be revised
   name: string;
   cafe: AngularFireObject<any>;
-  destination:string;
-  start:string;
+  destination: string;
+  start: string;
   oppeningInfo: string;
   chosenDay: string;
-  percent: number;
   applemaps: string;
+  slider_percent: number;
 
   public barChartOptions: any = {
     scaleShowVerticalLines: false,
     responsive: true
   };
   public barChartLabels: string[] = ['', '', '', '9:00',
-  '', '', '12:00','', '', '15:00',
-  '', '', '18:00','', '', '21:00','', ''];
+    '', '', '12:00', '', '', '15:00',
+    '', '', '18:00', '', '', '21:00', '', ''];
   public barChartType: string = 'bar';
   public barChartLegend: boolean = true;
-  public barChartData: any[] = [{data: [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0], label: 'Historical Popularity'}];
+  public barChartData: any[] = [{
+    data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    label: 'Historical Popularity'
+  }];
 
-  constructor(public navCtrl: NavController, public platform: Platform, private navParams: NavParams, private  adb: AngularFireDatabase, private launchNavigator: LaunchNavigator)
-  {
+  constructor(public navCtrl: NavController, public platform: Platform, private navParams: NavParams, private  adb: AngularFireDatabase, private launchNavigator: LaunchNavigator) {
     this.item = this.navParams.data;
     this.start = "";
     var date = new Date();
     var hours = date.getHours();
     var day = date.getDay();
-    if(day===0){ // the day is sunday
-        day = 7
-      }
-    this.applemaps="http://maps.apple.com/?q="+this.item.address;
+    const current_percent = this.adb.object('/cafe_list/' + this.item["id"] + '/busyness/0/1');
 
-    if (this.item.populartimes!=null) {
+    if (day === 0) { // the day is sunday
+      day = 7
+    }
+    this.applemaps = "http://maps.apple.com/?q=" + this.item.address;
+
+    if (this.item.populartimes != null) {
       // get the data from Firebase
-      this.item.currentPop = this.item.populartimes[day-1]["data"][hours];
+      this.item.currentPop = this.item.populartimes[day - 1]["data"][hours];
       if (this.item.currentPop === 0) {
         // populartimes is 0
         this.oppeningInfo = "Cafe is closed today!";
       } else {
         this.oppeningInfo = "";
       }
-      this.barChartData[0].data = this.item.populartimes[day-1]["data"].slice(6, 24);
-      this.barChartData[0].label = 'Estimated Popularity on ' + this.item.populartimes[day-1].name;
+      this.barChartData[0].data = this.item.populartimes[day - 1]["data"].slice(6, 24);
+      this.barChartData[0].label = 'Estimated Popularity on ' + this.item.populartimes[day - 1].name;
       this.chosenDay = day.toString();
 
     } else {
@@ -71,10 +78,10 @@ export class DetailsPage {
     this.cafe = adb.object('/cafe_list/' + this.item.place_id);
 
     //kind of inefficient, but i couldnt call the function changeGradient here for some reason
-    if (this.item.busyness[0][1]/100 <= 0.3){
+    if (this.item.busyness[0][1] / 100 <= 0.3) {
       this.item.color = "secondary";
     }
-    else if(this.item.busyness[0][1]/100 <= 0.6){
+    else if (this.item.busyness[0][1] / 100 <= 0.6) {
       this.item.color = "orange"
     }
     else {
@@ -83,21 +90,22 @@ export class DetailsPage {
     console.log(this.item);
 
   }
-  navigate(){
+
+  navigate() {
     if (this.platform.is('mobileweb') || this.platform.is('core')) {
       // This will only print when running on desktop
       console.log("I'm a regular browser!");
-      window.open(this.applemaps,"_self");
+      window.open(this.applemaps, "_self");
     } else {
       let options: LaunchNavigatorOptions = {
         start: this.start
       };
       this.launchNavigator.navigate(this.item.address, options)
-       .then(
-        success => alert('Launched navigator'),
-        error => alert('Error launching navigator: ' + error)
+        .then(
+          success => alert('Launched navigator'),
+          error => alert('Error launching navigator: ' + error)
         );
-      }
+    }
   }
 
   updateStatus(color: any) {
@@ -106,35 +114,42 @@ export class DetailsPage {
     this.cafe.update(color);
   }
 
-  changeGradient(ratio: any, timestamp: any){
-    if (ratio <= 0.3){
+  changeGradient(ratio: any) {
+    if (ratio <= 0.3) {
       this.item.color = "secondary";
     }
-    else if(ratio <= 0.6){
+    else if (ratio <= 0.6) {
       this.item.color = "orange"
     }
     else {
       this.item.color = "danger";
     }
-    //var busyness = {'busyness': {'0': [timestamp, ratio*100] }}
-    //this.cafes.update(busyness)
+
   }
 
 
-  updateDataOfDay():void {
-    if(this.item.populartimes!=null){
+  updateDataOfDay(): void {
+    if (this.item.populartimes != null) {
       // if the data exists in firebase, get them from firebase and parse popular times info
       var day = parseInt(this.chosenDay);
       let clone = JSON.parse(JSON.stringify(this.barChartData));
-      clone[0].data = this.item.populartimes[day-1]["data"].slice(6, 24);
-      clone[0].label = 'Historical Popularity on ' + this.item.populartimes[day-1].name;
+      clone[0].data = this.item.populartimes[day - 1]["data"].slice(6, 24);
+      clone[0].label = 'Historical Popularity on ' + this.item.populartimes[day - 1].name;
       this.barChartData = clone;
       this.oppeningInfo = "";
-    } else{
+    } else {
       // if the data doesn't exist, we assume the cafe is closed
       this.oppeningInfo = "Data currently not available!";
     }
   }
 
+  SetNewPercent(): void {
+    console.log(this.slider_percent);
+    const busyness_in_fire = this.adb.object('/cafe_list/' + this.item["id"] + '/busyness/0');
+    let time_current_min = Math.round(Date.now()/60000);//current time in form of milliseconds
+    busyness_in_fire.update({'1': this.slider_percent, '0': time_current_min});
 
+
+
+  };
 }

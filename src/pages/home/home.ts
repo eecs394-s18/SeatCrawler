@@ -2,11 +2,11 @@ import { Component} from '@angular/core';
 import { NavController } from 'ionic-angular';
 import { DetailsPage} from "../details/details";
 import { AngularFireDatabase,AngularFireList} from 'angularfire2/database';
-import { Observable } from 'rxjs/Observable';
 import {Geolocation} from "@ionic-native/geolocation";
 import {LatLng} from '@ionic-native/google-maps';//LocationService
 import {HttpClient} from "@angular/common/http";
 import { Spherical} from "@ionic-native/google-maps";
+import { Observable} from "rxjs/Observable";
 
 @Component({
     selector: 'page-home',
@@ -22,58 +22,53 @@ export class HomePage
     show_list: Array<any>;
     matchedResults: Observable<any[]>;
 
-    constructor(public navCtrl: NavController, public adb:  AngularFireDatabase, private http: HttpClient, private geolocation: Geolocation, private spherical: Spherical)
-    {
-        var maxShowLen = 10; // max cafe num on home list page
-        this.show_list = [];
-        this.geolocation.getCurrentPosition().then((resp) =>
-        {
-            // get user's current coordination using google's place nearbysearch api
-            var userCoords = new LatLng(resp.coords.latitude, resp.coords.longitude);
-            this.http.get('https://maps.googleapis.com/maps/api/place/nearbysearch/json?location='+
-            resp.coords.latitude
-              + ',' +
-              resp.coords.longitude
-              + '&rankby=distance&type=cafe&key=AIzaSyCfPG3wQmh-RMjmgY1F3xipVbmkvdq49RM').subscribe(
-            data=>
-            {
-              this.apiResults = data["results"];
+    constructor(public navCtrl: NavController, public adb:  AngularFireDatabase, private http: HttpClient, private geolocation: Geolocation, private spherical: Spherical) {
+      var maxShowLen = 10; // max cafe num on home list page
+      this.show_list = [];
+      // this.geolocation.getCurrentPosition().then((resp) =>
+      // {
+      // get user's current coordination using google's place nearbysearch api
+      // var userCoords = new LatLng(resp.coords.latitude, resp.coords.longitude);
+      this.http.get('https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=' +
+        // resp.coords.latitude
+        '42.057681'
+        + ',' +
+        '-87.685719'
+        // resp.coords.longitude
+        + '&rankby=distance&type=cafe&key=AIzaSyCfPG3wQmh-RMjmgY1F3xipVbmkvdq49RM').subscribe(
+        data => {
+          this.apiResults = data["results"];
 
-              console.log(this.apiResults);
+          // console.log(this.apiResults);
 
-              this.matchedResults = this.apiResults;
-              var i = 0;
-              var showNum = 0;
-              var resLen = Object.keys(this.apiResults).length;
-              while(i < resLen && showNum < maxShowLen){
-                  var apiResult = this.apiResults[i]
-                  var id = apiResult.place_id;
-                  let res = this.adb.object('/cafe_list/'+id);
-                  res.valueChanges().subscribe(item => {
-                      // if cafe's id doesn't exist in firebase, add it to firebase with its distance info
+          this.matchedResults = this.apiResults;
+          var i = 0;
+          var showNum = 0;
+          var resLen = Object.keys(this.apiResults).length;
+          while (i < resLen && showNum < maxShowLen) {
+            var apiResult = this.apiResults[i]
+            var id = apiResult.place_id;
+            let res = this.adb.object('/cafe_list/' + id);
+            res.valueChanges().subscribe(item => {
+              // if cafe's id doesn't exist in firebase, add it to firebase with its distance info
 
-                  		console.log("find one");
-                  		console.log(item);
-                      if(item!=null && item['id']!=undefined){
+              // console.log("find one");
+              // console.log(item);
+              if (item != null && item['id'] != undefined) {
 
-                        item["distance"] = compute_distance(userCoords, item["coordinates"]);
-                        var newStatus = chooseColor(getCurrentPop(item));
-                        this.adb.object('/cafe_list/'+item["id"]).update({ status: newStatus});
-                        this.show_list.push(item);
-                        showNum++;
-                      }
-                  });
-                  i++;
+                // item["distance"] = compute_distance(userCoords, item["coordinates"]);
+                var newStatus = chooseColor(getCurrentPop(item));
+                // this.adb.object('/cafe_list/' + item["id"]).update({status: newStatus});
+                this.show_list.push(item);
+                showNum++;
               }
             });
-
-        }).catch((error) =>
-        {
-            console.log('Error getting location', error);
+            i++;
+          }
         });
-    };
-}
 
+
+    }};
 function compute_distance(coords1, coords2) {
 
     //temporary version   -- straight-line distance

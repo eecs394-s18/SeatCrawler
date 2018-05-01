@@ -19,12 +19,12 @@
         <ion-item>
           <ion-label>How full is {{item["name"]}}?</ion-label>
 
-          <ion-range #x (ionChange)="changeGradient(x.ratio, item.busyness[0][0])" min="0" max="100" pin="true" step="5" color="{{item.color}}" [(ngModel)]= item.busyness[0][1]>
+          <ion-range #x (ionChange)="changeGradient(x.ratio)" min="0" max="100" pin="true" step="5" color="{{item.color}}"  [(ngModel)]= slider_percent>
             <ion-label range-left>0%</ion-label>
             <ion-label range-right>100%</ion-label>
           </ion-range>
         </ion-item>
-        <button padding ion-button (click)= "navigate()"  block [ngStyle]="{'width': '53%', 'margin': 'auto' }" color='secondary'>
+        <button padding ion-button (click)= "SetNewPercent()"  block [ngStyle]="{'width': '53%', 'margin': 'auto' }" color='secondary'>
           SUBMIT
         </button>
       </p>
