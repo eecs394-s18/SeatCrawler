@@ -7,6 +7,7 @@ import { timeInterval} from "rxjs/operators";
 import {Observable} from "rxjs/Observable";
 
 
+// import * as ColorMath from "color-math"
 /**
  * Generated class for the DetailsPage page.
  *
@@ -126,6 +127,68 @@ export class DetailsPage {
     }
 
   }
+
+  changeGradient2(ratio: number){
+    // red:    #ff0000,
+    // yellow: #ffff00,
+    // green:  #008000
+    if (ratio == 0.5){
+      this.item.color = "#ffff00";
+    }
+
+    else if(ratio < 0.5){
+      let r = ratio/0.5;
+      let r2 = 1-r;
+
+      let red = Math.round(255*r).toString(16); // #ff
+      let green = Math.round(255*r + 128*r2).toString(16); // #ff*r + #80*r2
+      // blue is 00
+      if (red.length == 1) red = '0'+red;
+      if (green.length == 1) green = '0' + green;
+
+      //this.item.color = '#'+red.toString(16).substring(0,2)+green.toString(16).substring(0,2)+"00";
+      this.item.color = '#'+red+green+"00";
+      console.log("Slider color changed to "+this.item.color);
+    }
+    else {
+      let r2 = 1-((ratio-.5)/.5);
+
+      let green = Math.round(255*r2).toString(16);
+      if (green.length == 1) green = '0' + green;
+
+      this.item.color = '#ff'+green+"00";
+      console.log("Slider color changed to "+this.item.color);
+    }
+  //var busyness = {'busyness': {'0': [timestamp, ratio*100] }}
+  //this.cafes.update(busyness)
+  }
+
+  // changeGradientWithColorMath(ratio: number){
+  //   // red:    #ff0000,
+  //   // yellow: #ffff00,
+  //   // green:  #008000
+
+  //   if (ratio == 0.5){
+  //     this.item.color = "yellow";
+  //   }
+  //   else if(ratio < 0.5){
+  //     var r = String(ratio/.5);
+  //     var r2 = String(1-(ratio/.5));
+  //     console.log(ColorMath.evaluate(r+" * #ffff00"))
+  //     var ex = r+"* #ffff00 + "+ r2+" * #008000";
+  //     console.log(ex);
+  //     this.item.color = ColorMath.evaluate(ex).result.resultStr;
+  //     console.log(this.item.color);
+  //   }
+  //   else {
+  //     var r = String((ratio-.5)/.5);
+  //     var r2 = String(1-Number(r));
+  //     this.item.color = ColorMath.evaluate(r+"* #ff0000 + "+ r2 +" * #ffff00").result.hex();
+  //     console.log(this.item.color);
+  //   }
+  //   //var busyness = {'busyness': {'0': [timestamp, ratio*100] }}
+  //   //this.cafes.update(busyness)
+  // }
 
 
   updateDataOfDay(): void {

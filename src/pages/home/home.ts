@@ -12,29 +12,27 @@ import { Observable} from "rxjs/Observable";
     selector: 'page-home',
     templateUrl: 'home.html'
 })
-export class HomePage
-{
-    cafe_list: Observable<any[]>; // cafe list from firebase
-    angularList: AngularFireList<{}>;
-    pagedetails = DetailsPage; // Jump another page
-    coords: LatLng;
-    apiResults: any;
-    show_list: Array<any>;
-    matchedResults: Observable<any[]>;
+export class HomePage {
+  cafe_list: Observable<any[]>; // cafe list from firebase
+  angularList: AngularFireList<{}>;
+  pagedetails = DetailsPage; // Jump another page
+  coords: LatLng;
+  apiResults: any;
+  show_list: Array<any>;
+  matchedResults: Observable<any[]>;
 
-    constructor(public navCtrl: NavController, public adb:  AngularFireDatabase, private http: HttpClient, private geolocation: Geolocation, private spherical: Spherical) {
-      var maxShowLen = 10; // max cafe num on home list page
-      this.show_list = [];
-      // this.geolocation.getCurrentPosition().then((resp) =>
-      // {
+  constructor(public navCtrl: NavController, public adb: AngularFireDatabase, private http: HttpClient, private geolocation: Geolocation, private spherical: Spherical) {
+    var maxShowLen = 10; // max cafe num on home list page
+    this.show_list = [];
+    this.geolocation.getCurrentPosition().then((resp) => {
       // get user's current coordination using google's place nearbysearch api
-      // var userCoords = new LatLng(resp.coords.latitude, resp.coords.longitude);
+      var userCoords = new LatLng(resp.coords.latitude, resp.coords.longitude);
       this.http.get('https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=' +
-        // resp.coords.latitude
-        '42.057681'
+        resp.coords.latitude
+        // '42.057681'
         + ',' +
-        '-87.685719'
-        // resp.coords.longitude
+        // '-87.685719'
+        resp.coords.longitude
         + '&rankby=distance&type=cafe&key=AIzaSyCfPG3wQmh-RMjmgY1F3xipVbmkvdq49RM').subscribe(
         data => {
           this.apiResults = data["results"];
@@ -52,23 +50,39 @@ export class HomePage
             res.valueChanges().subscribe(item => {
               // if cafe's id doesn't exist in firebase, add it to firebase with its distance info
 
-              // console.log("find one");
-              // console.log(item);
-              if (item != null && item['id'] != undefined) {
 
-                // item["distance"] = compute_distance(userCoords, item["coordinates"]);
-                var newStatus = chooseColor(getCurrentPop(item));
-                // this.adb.object('/cafe_list/' + item["id"]).update({status: newStatus});
-                this.show_list.push(item);
-                showNum++;
+              this.matchedResults = this.apiResults;
+              var i = 0;
+              var showNum = 0;
+              var resLen = Object.keys(this.apiResults).length;
+              while (i < resLen && showNum < maxShowLen) {
+                var apiResult = this.apiResults[i]
+                var id = apiResult.place_id;
+                let res = this.adb.object('/cafe_list/' + id);
+                res.valueChanges().subscribe(item => {
+                  console.log("find one");
+                  console.log(item);
+                  if (item != null && item['id'] != undefined) {
+                    //console.log(apiResult["geometry"]);
+                    item["distance"] = compute_distance(userCoords, item["coordinates"]);
+                    var newStatus = chooseColor(getCurrentPop(item));
+                    //Not sure if this line does much...
+                    // this.adb.object('/cafe_list/' + item["id"]).update({status: newStatus});
+                    this.show_list.push(item);
+                    showNum++;
+                  }
+                });
+                i++;
               }
             });
             i++;
           }
         });
+    });
 
+  };
+}
 
-    }};
 function compute_distance(coords1, coords2) {
 
     //temporary version   -- straight-line distance
@@ -104,8 +118,8 @@ function getCurrentPop(cafe){
     	if(day===0){ // the day is sunday
     		day = 7
     	}
-        return cafe.populartimes[(day-1)]["data"][hours];
-        // get the data from firebase
+    return cafe.populartimes[(day-1)]["data"][hours];
+    // get the data from firebase
     }
 }
 
