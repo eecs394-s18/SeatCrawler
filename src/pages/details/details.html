@@ -21,6 +21,7 @@
 
           <ion-range #x (ionChange)="changeGradient(x.ratio)" min="0" max="100" pin="true" step="5" color="{{item.color}}"  [(ngModel)]= slider_percent>
 
+
             <ion-label range-left>0%</ion-label>
             <ion-label range-right>100%</ion-label>
           </ion-range>

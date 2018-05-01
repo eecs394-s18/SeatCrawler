@@ -163,6 +163,7 @@ export class DetailsPage {
   //this.cafes.update(busyness)
   }
 
+
   // changeGradientWithColorMath(ratio: number){
   //   // red:    #ff0000,
   //   // yellow: #ffff00,
@@ -189,6 +190,7 @@ export class DetailsPage {
   //   //var busyness = {'busyness': {'0': [timestamp, ratio*100] }}
   //   //this.cafes.update(busyness)
   // }
+
 
 
   updateDataOfDay(): void {

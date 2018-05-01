@@ -55,24 +55,25 @@ export class HomePage {
               var i = 0;
               var showNum = 0;
               var resLen = Object.keys(this.apiResults).length;
-              while (i < resLen && showNum < maxShowLen) {
-                var apiResult = this.apiResults[i]
-                var id = apiResult.place_id;
-                let res = this.adb.object('/cafe_list/' + id);
-                res.valueChanges().subscribe(item => {
-                  console.log("find one");
-                  console.log(item);
-                  if (item != null && item['id'] != undefined) {
-                    //console.log(apiResult["geometry"]);
-                    item["distance"] = compute_distance(userCoords, item["coordinates"]);
-                    var newStatus = chooseColor(getCurrentPop(item));
-                    //Not sure if this line does much...
-                    // this.adb.object('/cafe_list/' + item["id"]).update({status: newStatus});
-                    this.show_list.push(item);
-                    showNum++;
-                  }
-                });
-                i++;
+
+              while(i < resLen && showNum < maxShowLen){
+                  var apiResult = this.apiResults[i]
+                  var id = apiResult.place_id;
+                  let res = this.adb.object('/cafe_list/'+id);
+                  res.valueChanges().subscribe(item => {
+                  		console.log("find one");
+                  		console.log(item);
+                      if(item!=null && item['id']!=undefined){
+                        //console.log(apiResult["geometry"]);
+                        item["distance"] = compute_distance(userCoords, item["coordinates"]);
+                        var newStatus = chooseColor(getCurrentPop(item));
+                        //Not sure if this line does much...
+                        this.adb.object('/cafe_list/'+item["id"]).update({ status: newStatus});
+                        this.show_list.push(item);
+                        showNum++;
+                      }
+                  });
+                  i++;
               }
             });
             i++;
