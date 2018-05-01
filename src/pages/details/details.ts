@@ -80,7 +80,7 @@ export class DetailsPage {
       this.oppeningInfo = "Data currently not available!";
       this.item.currentPop = 0;
     }
-    console.log(this.item.place_id);
+    //console.log(this.item.place_id);
     this.cafe = adb.object('/cafe_list/' + this.item.place_id);
 
     //kind of inefficient, but i couldnt call the function changeGradient here for some reason
@@ -93,7 +93,7 @@ export class DetailsPage {
     else {
       this.item.color = "danger";
     }
-    console.log(this.item);
+    //console.log(this.item);
 
   }
 
@@ -223,9 +223,10 @@ export class DetailsPage {
 
   SetNewPercent(): void {
     console.log(this.slider_percent);
-    const busyness_in_fire = this.adb.object('/cafe_list/' + this.item["id"] + '/busyness/0');
+    var busyness_in_fire = this.adb.object('/cafe_list/' + this.item["id"] + '/busyness/0');
+    console.log(busyness_in_fire);
     let time_current_min = Math.round(Date.now()/60000);//current time in form of milliseconds
-    busyness_in_fire.update({'1': this.slider_percent, '0': time_current_min});
+    busyness_in_fire.update({'0': time_current_min, '1': this.slider_percent});
 
 
 
