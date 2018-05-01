@@ -111,8 +111,8 @@ function getCurrentPop(cafe){
     	if(day===0){ // the day is sunday
     		day = 7
     	}
-        return cafe.populartimes[(day-1)]["data"][hours];
-        // get the data from firebase
+    return cafe.populartimes[(day-1)]["data"][hours];
+    // get the data from firebase
     }
 }
 
