@@ -67,7 +67,7 @@ export class DetailsPage {
       this.item.currentPop = this.item.populartimes[day - 1]["data"][hours];
       if (this.item.currentPop === 0) {
         // populartimes is 0
-        this.oppeningInfo = "Cafe is closed today!";
+        this.oppeningInfo = "Cafe was closed!";
       } else {
         this.oppeningInfo = "";
       }
@@ -177,34 +177,6 @@ export class DetailsPage {
   }
 
 
-  // changeGradientWithColorMath(ratio: number){
-  //   // red:    #ff0000,
-  //   // yellow: #ffff00,
-  //   // green:  #008000
-
-  //   if (ratio == 0.5){
-  //     this.item.color = "yellow";
-  //   }
-  //   else if(ratio < 0.5){
-  //     var r = String(ratio/.5);
-  //     var r2 = String(1-(ratio/.5));
-  //     console.log(ColorMath.evaluate(r+" * #ffff00"))
-  //     var ex = r+"* #ffff00 + "+ r2+" * #008000";
-  //     console.log(ex);
-  //     this.item.color = ColorMath.evaluate(ex).result.resultStr;
-  //     console.log(this.item.color);
-  //   }
-  //   else {
-  //     var r = String((ratio-.5)/.5);
-  //     var r2 = String(1-Number(r));
-  //     this.item.color = ColorMath.evaluate(r+"* #ff0000 + "+ r2 +" * #ffff00").result.hex();
-  //     console.log(this.item.color);
-  //   }
-  //   //var busyness = {'busyness': {'0': [timestamp, ratio*100] }}
-  //   //this.cafes.update(busyness)
-  // }
-
-
 
   updateDataOfDay(): void {
     if (this.item.populartimes != null) {
@@ -222,13 +194,10 @@ export class DetailsPage {
   }
 
   SetNewPercent(): void {
-    console.log(this.slider_percent);
-    var busyness_in_fire = this.adb.object('/cafe_list/' + this.item["id"] + '/busyness/0');
-    console.log(busyness_in_fire);
+    const busyness_in_fire = this.adb.object('/cafe_list/' + this.item["id"] +"/busyness/0");
+   
     let time_current_min = Math.round(Date.now()/60000);//current time in form of milliseconds
-    busyness_in_fire.update({'0': time_current_min, '1': this.slider_percent});
-
-
-
+    busyness_in_fire.update({0:time_current_min});
+    busyness_in_fire.update({1:this.slider_percent});
   };
 }
