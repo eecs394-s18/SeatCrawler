@@ -103,7 +103,7 @@ export class DetailsPage {
     this.cafe.update(color);
   }
 
-  changeGradient1(ratio: any, timestamp: any){
+  changeGradient(ratio: any, timestamp: any){
     if (ratio <= 0.3){
       this.item.color = "secondary";
     }
@@ -117,7 +117,7 @@ export class DetailsPage {
     //this.cafes.update(busyness)
   }
 
-  changeGradient(ratio: number){
+  changeGradient2(ratio: number){
     // red:    #ff0000,
     // yellow: #ffff00,
     // green:  #008000
