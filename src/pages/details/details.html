@@ -1,6 +1,6 @@
 <ion-header>
 
-  <ion-navbar>
+  <ion-navbar color="primary">
     <ion-title>Details: {{item["name"]}}</ion-title>
 
   </ion-navbar>
@@ -46,7 +46,7 @@
         {{item["address"]}}
       </button>
       <!-- cafe direction (link to google map) -->
-      <button padding ion-button (click)= "navigate()"  block [ngStyle]="{'width': '50%', 'margin': '5px auto' }"> <ion-icon name='ios-pin-outline' item-start></ion-icon>
+      <button padding ion-button color="blue" (click)= "navigate()"  block [ngStyle]="{'width': '50%', 'margin': '5px auto' }"> <ion-icon name='ios-pin-outline' item-start></ion-icon>
         <span style="margin-left: 5px;">Directions</span>
       </button>
       <ion-list>

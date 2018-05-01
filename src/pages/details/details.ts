@@ -30,6 +30,8 @@ export class DetailsPage {
   applemaps: string;
   slider_percent: number;
 
+  tabBarElement: any;
+
   public barChartOptions: any = {
     scaleShowVerticalLines: false,
     responsive: true
@@ -44,7 +46,10 @@ export class DetailsPage {
     label: 'Historical Popularity'
   }];
 
-  constructor(public navCtrl: NavController, public platform: Platform, private navParams: NavParams, private  adb: AngularFireDatabase, private launchNavigator: LaunchNavigator) {
+
+  constructor(public navCtrl: NavController, public platform: Platform, private navParams: NavParams, private  adb: AngularFireDatabase, private launchNavigator: LaunchNavigator)
+  {
+    this.tabBarElement = document.querySelector('.tabbar.show-tabbar');
     this.item = this.navParams.data;
     this.start = "";
     var date = new Date();
@@ -107,6 +112,14 @@ export class DetailsPage {
           error => alert('Error launching navigator: ' + error)
         );
     }
+  }
+
+  ionViewWillEnter() {
+    this.tabBarElement.style.display = 'none';
+  }
+
+  ionViewWillLeave() {
+    this.tabBarElement.style.display = 'flex';
   }
 
   updateStatus(color: any) {
