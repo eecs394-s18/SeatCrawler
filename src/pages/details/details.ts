@@ -3,6 +3,7 @@ import { NavController, NavParams, Platform} from 'ionic-angular';
 import {Cafe} from "../../app/cafe";
 import {AngularFireDatabase, AngularFireObject} from 'angularfire2/database';
 import { LaunchNavigator, LaunchNavigatorOptions } from '@ionic-native/launch-navigator';
+
 // import * as ColorMath from "color-math"
 /**
  * Generated class for the DetailsPage page.
@@ -102,7 +103,7 @@ export class DetailsPage {
     this.cafe.update(color);
   }
 
-  changeGradient(ratio: any, timestamp: any){
+  changeGradient1(ratio: any, timestamp: any){
     if (ratio <= 0.3){
       this.item.color = "secondary";
     }
@@ -116,7 +117,7 @@ export class DetailsPage {
     //this.cafes.update(busyness)
   }
 
-  changeGradient2(ratio: number){
+  changeGradient(ratio: number){
     // red:    #ff0000,
     // yellow: #ffff00,
     // green:  #008000
@@ -125,22 +126,26 @@ export class DetailsPage {
     }
 
     else if(ratio < 0.5){
-      var r = ratio/0.5;
-      var r2 = 1-r;
+      let r = ratio/0.5;
+      let r2 = 1-r;
 
-      var red = 255*r; // #ff
-      var green = 255*r + 128*r2; // #ff*r + #80*r2
-      var blue = 0;
+      let red = Math.round(255*r).toString(16); // #ff
+      let green = Math.round(255*r + 128*r2).toString(16); // #ff*r + #80*r2
+      // blue is 00
+      if (red.length == 1) red = '0'+red;
+      if (green.length == 1) green = '0' + green;
 
-      this.item.color = '0x'+red.toString(16).substring(0,2)+green.toString(16).substring(0,2)+"00";
+      //this.item.color = '#'+red.toString(16).substring(0,2)+green.toString(16).substring(0,2)+"00";
+      this.item.color = '#'+red+green+"00";
       console.log("Slider color changed to "+this.item.color);
     }
     else {
-      var r2 = 1-((ratio-.5)/.5);
+      let r2 = 1-((ratio-.5)/.5);
 
-      var green = 255*r2
+      let green = Math.round(255*r2).toString(16);
+      if (green.length == 1) green = '0' + green;
 
-      this.item.color = '0xff'+green.toString(16).substring(0,2)+"00";
+      this.item.color = '#ff'+green+"00";
       console.log("Slider color changed to "+this.item.color);
     }
   //var busyness = {'busyness': {'0': [timestamp, ratio*100] }}

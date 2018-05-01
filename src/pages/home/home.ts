@@ -58,6 +58,7 @@ export class HomePage
                         //console.log(apiResult["geometry"]);
                         item["distance"] = compute_distance(userCoords, item["coordinates"]);
                         var newStatus = chooseColor(getCurrentPop(item));
+                        //Not sure if this line does much...
                         this.adb.object('/cafe_list/'+item["id"]).update({ status: newStatus});
                         this.show_list.push(item);
                         showNum++;
