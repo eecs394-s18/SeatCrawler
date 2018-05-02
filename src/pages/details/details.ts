@@ -210,7 +210,7 @@ export class DetailsPage {
   SetNewPercent(): void {
 let alert = this.alertCtrl.create({
     title: 'Thank you!',
-    subTitle: 'Thank you for your report!',
+    subTitle: 'Your report of ' + this.slider_percent + '% full has been submitted!',
     buttons: ['Dismiss']
   });
   alert.present();
