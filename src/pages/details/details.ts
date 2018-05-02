@@ -1,10 +1,11 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams, Platform} from 'ionic-angular';
+import { NavController, NavParams, Platform, AlertController} from 'ionic-angular';
 import { Cafe} from "../../app/cafe";
 import { AngularFireDatabase,AngularFireObject} from 'angularfire2/database';
 import { LaunchNavigator, LaunchNavigatorOptions } from '@ionic-native/launch-navigator';
 import { timeInterval} from "rxjs/operators";
 import {Observable} from "rxjs/Observable";
+
 // import { ChartsModule } from 'ng2-Chargs'; // are we going to import the charts?
 
 
@@ -51,7 +52,7 @@ export class DetailsPage {
   }];
 
 
-  constructor(public navCtrl: NavController, public platform: Platform, private navParams: NavParams, private  adb: AngularFireDatabase, private launchNavigator: LaunchNavigator)
+  constructor(public navCtrl: NavController, public platform: Platform, private navParams: NavParams, private  adb: AngularFireDatabase, private launchNavigator: LaunchNavigator, private alertCtrl: AlertController)
   {
     this.tabBarElement = document.querySelector('.tabbar.show-tabbar');
     this.item = this.navParams.data;
@@ -207,7 +208,12 @@ export class DetailsPage {
   }
 
   SetNewPercent(): void {
-
+let alert = this.alertCtrl.create({
+    title: 'Thank you!',
+    subTitle: 'Thank you for your report!',
+    buttons: ['Dismiss']
+  });
+  alert.present();
     const busyness_in_fire = this.adb.object('/cafe_list/' + this.item["id"] +"/busyness/0");
    
     let time_current_min = Math.round(Date.now()/60000);//current time in form of milliseconds
