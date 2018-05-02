@@ -30,6 +30,7 @@ export class DetailsPage {
   chosenDay: string;
   applemaps: string;
   current_percent: number;
+  slider_percent: number;
 
   tabBarElement: any;
 
@@ -59,6 +60,7 @@ export class DetailsPage {
     var hours = date.getHours();
     var day = date.getDay();
     const current_percent = this.adb.object('/cafe_list/' + this.item["id"] + '/busyness/0/1');
+    this.slider_percent = this.item.busyness[0][1];
 
     if (day === 0) { // the day is sunday
       day = 7
