@@ -90,7 +90,7 @@ export class DetailsPage {
 
     //kind of inefficient, but i couldnt call the function changeGradient here for some reason
     
-    let time_diff = Math.round(Date.now()/60000)-this.item.busyness[0][1];//current time in form of milliseconds
+    let time_diff = Math.round(Date.now()/60000)-this.item.busyness[0][0];//current time in form of milliseconds
     console.log("time_diff", time_diff);
     if (this.item.busyness[0][1] && (time_diff<60)){
       this.slider_percent = this.item.busyness[0][1];

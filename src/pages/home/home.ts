@@ -111,7 +111,7 @@ function getCurrentPop(cafe){
     let day = date.getDay();
     console.log("date",date);
     console.log("date.now", Date.now());
-    let time_diff = Math.round(Date.now()/60000)-cafe.busyness[0][1];//current time in form of milliseconds
+    let time_diff = Math.round(Date.now()/60000)-cafe.busyness[0][0];//current time in form of milliseconds
     console.log("time_diff", time_diff);
     if (cafe.busyness[0][1] && (time_diff < 60)){
       console.log("Using busyness ",cafe.busyness[0][1])
