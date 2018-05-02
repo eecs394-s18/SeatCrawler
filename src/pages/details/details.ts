@@ -5,6 +5,7 @@ import { AngularFireDatabase,AngularFireObject} from 'angularfire2/database';
 import { LaunchNavigator, LaunchNavigatorOptions } from '@ionic-native/launch-navigator';
 import { timeInterval} from "rxjs/operators";
 import {Observable} from "rxjs/Observable";
+// import { ChartsModule } from 'ng2-Chargs'; // are we going to import the charts?
 
 
 // import * as ColorMath from "color-math"
@@ -28,7 +29,7 @@ export class DetailsPage {
   oppeningInfo: string;
   chosenDay: string;
   applemaps: string;
-  slider_percent: number;
+  current_percent: number;
 
   tabBarElement: any;
 
@@ -42,6 +43,8 @@ export class DetailsPage {
   public barChartType: string = 'bar';
   public barChartLegend: boolean = true;
   public barChartData: any[] = [{
+    backgroundColor: "blue",
+    borderColor: "blue",
     data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
     label: 'Historical Popularity'
   }];
@@ -73,6 +76,7 @@ export class DetailsPage {
       }
       this.barChartData[0].data = this.item.populartimes[day - 1]["data"].slice(6, 24);
       this.barChartData[0].label = 'Estimated Popularity on ' + this.item.populartimes[day - 1].name;
+      this.barChartData[0].backgroundColor = "blue";
       this.chosenDay = day.toString();
 
     } else {
@@ -197,6 +201,6 @@ export class DetailsPage {
    
     let time_current_min = Math.round(Date.now()/60000);//current time in form of milliseconds
     busyness_in_fire.update({0:time_current_min});
-    busyness_in_fire.update({1:this.slider_percent});
+    busyness_in_fire.update({1:this.current_percent});
   };
 }
