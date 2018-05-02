@@ -6,17 +6,16 @@
   </ion-navbar>
 </ion-header>
 
-<ion-content class=" cards-bg">
+<ion-content class="cards-bg" color = light_grey>
 
-  <ion-card class="cards-list-demo">
+  <ion-card class="cards-list-demo" color = "light">
 
-
-    <ion-card-content>
+    <ion-card-content color = "light">
 
 
       <p>
 
-        <ion-item>
+        <ion-item color = "light">
           <ion-label>How full is {{item["name"]}}?</ion-label>
 
           <ion-range #x (ionChange)="changeGradient(x.ratio)" min="0" max="100" pin="true" step="5" color="{{item.color}}"  [(ngModel)]= slider_percent>
@@ -32,26 +31,25 @@
       </p>
     </ion-card-content>
   </ion-card>
-  <ion-card class="cards-list-demo">
+  <ion-card class="cards-list-demo" color = "light">
     <ion-list detail-none>
       <!-- cafe website link -->
-      <a href = "{{item['website']}}" target="_blank" ion-item>
+      <a color = "light" href = "{{item['website']}}" target="_blank" ion-item>
         <ion-icon name='ios-globe-outline' item-start></ion-icon>
         Website
       </a>
       <!-- cafe address -->
-      <button ion-item text-wrap>
-
+      <button ion-item text-wrap color = "light">
         <ion-icon name='ios-home-outline' item-start></ion-icon>
         {{item["address"]}}
       </button>
-      <!-- cafe direction (link to google map) -->
+      <!-- cafe directions (link to google map) -->
       <button padding ion-button color="blue" (click)= "navigate()"  block [ngStyle]="{'width': '50%', 'margin': '5px auto' }"> <ion-icon name='ios-pin-outline' item-start></ion-icon>
         <span style="margin-left: 5px;">Directions</span>
       </button>
       <ion-list>
         <!-- google popular times info  -->
-        <button padding ion-item detail-none>
+        <button padding ion-item detail-none color = "light">
           <ion-icon name='logo-google' item-start></ion-icon>
           Estimated Current Popularity: {{item["currentPop"]}}%
         </button>
@@ -70,7 +68,7 @@
       </div>
         <p [ngStyle]="{'text-align': 'center' }">{{oppeningInfo}}</p>
         <ion-list>
-          <ion-item>
+          <ion-item color = "light">
             <ion-label block>
               Historical Popularity on
             </ion-label>
