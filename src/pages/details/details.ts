@@ -60,7 +60,6 @@ export class DetailsPage {
     var hours = date.getHours();
     var day = date.getDay();
     const current_percent = this.adb.object('/cafe_list/' + this.item["id"] + '/busyness/0/1');
-    this.slider_percent = this.item.busyness[0][1];
 
     if (day === 0) { // the day is sunday
       day = 7
@@ -90,6 +89,16 @@ export class DetailsPage {
     this.cafe = adb.object('/cafe_list/' + this.item.place_id);
 
     //kind of inefficient, but i couldnt call the function changeGradient here for some reason
+    
+    let time_diff = Math.round(Date.now()/60000)-this.item.busyness[0][1];//current time in form of milliseconds
+    console.log("time_diff", time_diff);
+    if (this.item.busyness[0][1] && (time_diff<60)){
+      this.slider_percent = this.item.busyness[0][1];
+    }
+    else if (this.item.populartimes != null){
+      this.slider_percent = this.item.populartimes[(day-1)]["data"][hours];
+    }
+
     if (this.item.busyness[0][1] / 100 <= 0.3) {
       this.item.color = "secondary";
     }

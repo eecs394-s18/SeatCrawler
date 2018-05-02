@@ -92,7 +92,7 @@ function chooseColor(pop){
     // choose color base on the current popularity
     if(pop === -1) {
         return "black";
-    }else if(pop === 0) {
+    }else if(pop == 0) {
         return "gray"
     } else if(pop < 60) {
         return "green"
@@ -108,15 +108,24 @@ function getCurrentPop(cafe){
     // get current date and hour
     let hours = date.getHours();
     let day = date.getDay();
-    if(cafe.populartimes==null){
-        return -1;
+    console.log("date",date);
+    console.log("date.now", Date.now());
+    let time_diff = Math.round(Date.now()/60000)-cafe.busyness[0][1];//current time in form of milliseconds
+    console.log("time_diff", time_diff);
+    if (cafe.busyness[0][1] && (time_diff<60)){
+      console.log("Using busyness ",cafe.busyness[0][1])
+      return cafe.busyness[0][1];
+    }
+    else if(cafe.populartimes==null){
+        return -1; 
+        // @Bruce this should get new places data, and upload them to firebase
         // if the data doesn't exist, return -1 make the color become black
-    }else{
+    } else {
     	if(day===0){ // the day is sunday
     		day = 7
     	}
+    console.log("using places", cafe.populartimes[(day-1)]["data"][hours])
     return cafe.populartimes[(day-1)]["data"][hours];
-    // get the data from firebase
     }
 }
 
