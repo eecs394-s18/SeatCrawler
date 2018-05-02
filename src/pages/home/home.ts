@@ -23,6 +23,7 @@ export class HomePage {
 
   constructor(public navCtrl: NavController, public adb: AngularFireDatabase, private http: HttpClient, private geolocation: Geolocation, private spherical: Spherical) {
     var maxShowLen = 10; // max cafe num on home list page
+    var set = new Set();
     this.show_list = [];
     this.geolocation.getCurrentPosition().then((resp) => {
       // get user's current coordination using google's place nearbysearch api
@@ -49,16 +50,26 @@ export class HomePage {
             let res = this.adb.object('/cafe_list/' + id);
             res.valueChanges().subscribe(item => {
               // if cafe's id doesn't exist in firebase, add it to firebase with its distance info
-            		console.log("find one");
-            		console.log(item);
+
                 if(item!=null && item['id']!=undefined){
                   //console.log(apiResult["geometry"]);
                   item["distance"] = compute_distance(userCoords, item["coordinates"]);
-                  //var newStatus = chooseColor(getCurrentPop(item));
-                  //Not sure if this line does much...
-                  //this.adb.object('/cafe_list/'+item["id"]).update({ status: newStatus});
-                  this.show_list.push(item);
-                  showNum++;
+
+                  // set color based on the result from google api
+                   var newStatus = chooseColor(getCurrentPop(item));
+
+                  // set color based on the result from user input
+                  //console.log(chooseColor(item["busyness"][0][1]));
+                  //var newStatus = chooseColor(item["busyness"][0][1]);
+
+
+                  item["status"] = newStatus;
+                  this.adb.object('/cafe_list/'+item["id"]).update({ status: newStatus});
+                  if(!set.has(item['id'])) {
+                    set.add(item['id']);
+                    this.show_list.push(item);
+                    showNum++;
+                  }
                 }
             });
             i++;

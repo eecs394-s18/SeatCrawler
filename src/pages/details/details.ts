@@ -172,11 +172,10 @@ export class DetailsPage {
       this.item.color = '#ff'+green+"00";
       console.log("Slider color changed to "+this.item.color);
     }
-  //var busyness = {'busyness': {'0': [timestamp, ratio*100] }}
-  //this.cafes.update(busyness)
+    
+    //var busyness = {'busyness': {'0': [timestamp, ratio*100] }}
+    //this.cafes.update(busyness)
   }
-
-
 
   updateDataOfDay(): void {
     if (this.item.populartimes != null) {
