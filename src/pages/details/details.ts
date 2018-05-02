@@ -207,11 +207,15 @@ export class DetailsPage {
   }
 
   SetNewPercent(): void {
+
     const busyness_in_fire = this.adb.object('/cafe_list/' + this.item["id"] +"/busyness/0");
    
     let time_current_min = Math.round(Date.now()/60000);//current time in form of milliseconds
+    console.log("time_current_min", time_current_min)
     busyness_in_fire.update({0:time_current_min});
-    busyness_in_fire.update({1:this.current_percent});
+        console.log("slider_percent", this.slider_percent);
+
+    busyness_in_fire.update({1:this.slider_percent});
 
     // let E_t = parseFloat( Math.exp(-(time_input_min - time_db_min) * c).toFixed(2));
     // let percent_current = Math.round((percent_input + percent_db * E_t) / ( 1 + E_t));
