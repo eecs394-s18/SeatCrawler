@@ -147,13 +147,12 @@ export class DetailsPage {
     if (ratio <= 0.3) {
       this.item.color = "secondary";
     }
-    else if (ratio <= 0.6) {
+    else if (ratio <= 0.8) {
       this.item.color = "orange"
     }
     else {
       this.item.color = "danger";
     }
-
   }
 
   changeGradient2(ratio: number){
@@ -213,5 +212,8 @@ export class DetailsPage {
     let time_current_min = Math.round(Date.now()/60000);//current time in form of milliseconds
     busyness_in_fire.update({0:time_current_min});
     busyness_in_fire.update({1:this.current_percent});
+
+    // let E_t = parseFloat( Math.exp(-(time_input_min - time_db_min) * c).toFixed(2));
+    // let percent_current = Math.round((percent_input + percent_db * E_t) / ( 1 + E_t));
   };
 }

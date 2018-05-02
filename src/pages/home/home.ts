@@ -94,14 +94,15 @@ function chooseColor(pop){
         return "black";
     }else if(pop == 0) {
         return "gray"
-    } else if(pop < 60) {
+    } else if(pop < 30) {
         return "green"
-    } else if(pop < 85) {
+    } else if(pop < 80) {
         return "orange"
     } else {
         return "red"
     }
 }
+
 
 function getCurrentPop(cafe){
     let date = new Date();
@@ -112,7 +113,7 @@ function getCurrentPop(cafe){
     console.log("date.now", Date.now());
     let time_diff = Math.round(Date.now()/60000)-cafe.busyness[0][1];//current time in form of milliseconds
     console.log("time_diff", time_diff);
-    if (cafe.busyness[0][1] && (time_diff<60)){
+    if (cafe.busyness[0][1] && (time_diff < 60)){
       console.log("Using busyness ",cafe.busyness[0][1])
       return cafe.busyness[0][1];
     }
