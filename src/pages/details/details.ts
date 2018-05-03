@@ -32,7 +32,7 @@ export class DetailsPage {
   applemaps: string;
   current_percent: number;
   slider_percent: number;
-  submitted: boolean;
+  time_this_user_updated: number;
 
   tabBarElement: any;
 
@@ -55,7 +55,7 @@ export class DetailsPage {
 
   constructor(public navCtrl: NavController, public platform: Platform, private navParams: NavParams, private  adb: AngularFireDatabase, private launchNavigator: LaunchNavigator, private alertCtrl: AlertController)
   {
-  this.submitted=false;
+    this.time_this_user_updated = Math.round(Date.now()/60000)-3;
     this.tabBarElement = document.querySelector('.tabbar.show-tabbar');
     this.item = this.navParams.data;
     this.start = "";
@@ -210,38 +210,31 @@ export class DetailsPage {
   }
 
   SetNewPercent(): void {
-      console.log("submitted?", this.submitted);
-    let time_diff1 = Math.round(Date.now()/60000)-this.item.busyness[0][0];//current time in form of milliseconds
-            console.log("newtimediff?", time_diff1);
+    let time_since_this_user_updated = Math.round(Date.now()/60000)-this.time_this_user_updated;
+    console.log("time_since_this_user_updated", time_since_this_user_updated);
 
-  if (this.submitted==false || time_diff1 > 2 )
-{
-this.submitted=true;
-let alert = this.alertCtrl.create({
-
-    title: 'Thank you!',
-    subTitle: 'Your report of ' + this.slider_percent + '% full has been submitted!',
-    buttons: ['Dismiss']
-  });
-  
-  alert.present();
-    const busyness_in_fire = this.adb.object('/cafe_list/' + this.item["id"] +"/busyness/0");
-   
-    let time_current_min = Math.round(Date.now()/60000);//current time in form of milliseconds
-    console.log("time_current_min", time_current_min)
-    busyness_in_fire.update({0:time_current_min});
-        console.log("slider_percent", this.slider_percent);
-
-    busyness_in_fire.update({1:this.slider_percent});
-
-    // let E_t = parseFloat( Math.exp(-(time_input_min - time_db_min) * c).toFixed(2));
-    // let percent_current = Math.round((percent_input + percent_db * E_t) / ( 1 + E_t));
+    if (time_since_this_user_updated > 2 ){
+      let alert = this.alertCtrl.create({
+        title: 'Thank you!',
+        subTitle: 'Your report of ' + this.slider_percent + '% full has been submitted!',
+        buttons: ['Dismiss']
+      });
+    
+      const busyness_in_fire = this.adb.object('/cafe_list/' + this.item["id"] +"/busyness/0");
+     
+      let time_current_min = Math.round(Date.now()/60000);//current time in form of milliseconds
+      console.log("time_current_min", time_current_min)
+      busyness_in_fire.update({0:time_current_min});
+      console.log("slider_percent", this.slider_percent);
+      busyness_in_fire.update({1:this.slider_percent});
+      this.time_this_user_updated = time_current_min;
+      alert.present();
   }
   else {
   let alert = this.alertCtrl.create({
 
     title: 'Report not sent!',
-    subTitle: 'Please wait at least 2 minutes before reporting a status update!',
+    subTitle: 'Please wait at least 2 minutes before reporting a status update.',
     buttons: ['Dismiss']
   });
   
