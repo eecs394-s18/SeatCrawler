@@ -1,4 +1,4 @@
-SeatCrawler - SeatCrawler394.firebase.com
+SeatCrawler - SeatCrawler394.firebaseapp.com
 
 Ever gone to a coffee shop only to find that it was full? 
 SeatCrawler is an hybrid web/mobile native app for busy students and others who often work in public spaces like coffee shops.
